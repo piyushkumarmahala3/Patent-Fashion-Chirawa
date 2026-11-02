@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="day">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patent Fashion Chirawa – Fashion &amp; Footwear</title>
+<meta name="description" content="Fashion and footwear in Chirawa, Rajasthan. Visit us near Kabutar Khana on Khetri Road, close to Gitanjali Jewellers.">
+<meta property="og:title" content="Patent Fashion Chirawa – Fashion &amp; Footwear">
+<meta property="og:description" content="Fashion and footwear in Chirawa, Rajasthan.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1B2A4A">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231B2A4A' rx='14' width='100' height='100'/><text x='50' y='70' text-anchor='middle' font-family='serif' font-size='60' font-weight='700' fill='%23FDFAF5'>P</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════ */
+:root {
+  --bg-primary: #FDFAF5;
+  --bg-secondary: #F5EFE5;
+  --bg-accent: #1B2A4A;
+  --bg-accent-2: #162240;
+  --bg-footer: #0F1520;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6358;
+  --text-on-dark: #F0EBE2;
+  --text-muted-dark: #9A9488;
+  --accent: #2E5B6E;
+  --accent-hover: #1D4050;
+  --gold: #C4A87C;
+  --gold-hover: #B8995F;
+  --border: #E0D8CC;
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+  --overlay: rgba(0,0,0,0.45);
+  --star: #E0D4C0;
+  --star-active: #E8B931;
+  --success: #2E7D52;
+  --error: #B83A3A;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-lg: 16px;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --header-h: 64px;
+  --announce-h: 36px;
+  --transition: 0.3s ease;
+}
+
+[data-theme="night"] {
+  --bg-primary: #0F1419;
+  --bg-secondary: #171F2A;
+  --bg-accent: #0D1B30;
+  --bg-accent-2: #0A1525;
+  --bg-footer: #080C12;
+  --text-primary: #E4DCD0;
+  --text-secondary: #9A9080;
+  --text-on-dark: #E4DCD0;
+  --text-muted-dark: #7A7468;
+  --accent: #5B9AAE;
+  --accent-hover: #78B8CC;
+  --gold: #D4B88C;
+  --gold-hover: #E0C89E;
+  --border: #26303E;
+  --card-bg: #1A2332;
+  --card-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.65);
+  --star: #3A3428;
+  --star-active: #E8B931;
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: inherit; font-size: inherit; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: var(--text-primary);
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══════════════════════════════════════════════
+   ANNOUNCEMENT STRIP
+   ═══════════════════════════════════════════════ */
+.announcement {
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
+  height: var(--announce-h);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  z-index: 101;
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-inner {
+  padding-right: 3em;
+  display: inline-block;
+}
+
+.marquee-inner span { color: var(--gold); }
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
+  backdrop-filter: blur(12px);
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.monogram {
+  width: 38px;
+  height: 38px;
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  transition: transform var(--transition);
+}
+.logo:hover .monogram { transform: scale(1.05); }
+
+.shop-name {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav a {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+  position: relative;
+}
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width var(--transition);
+}
+.nav a:hover { color: var(--text-primary); }
+.nav a:hover::after { width: 100%; }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  transition: all var(--transition);
+  border: 1px solid transparent;
+}
+.icon-btn:hover {
+  border-color: var(--border);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.owner-btn {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+.owner-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  width: 38px;
+  height: 38px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: var(--bg-secondary);
+  border-radius: 50%;
+}
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+.nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ═══════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════ */
+.hero {
+  min-height: calc(100vh - var(--header-h) - var(--announce-h));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 48px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.hero-tag {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 480px;
+}
+
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  border: none;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+.hero-image-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  max-height: 620px;
+}
+.hero-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.hero-image-wrap:hover img { transform: scale(1.04); }
+
+.img-credit {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  background: rgba(0,0,0,0.35);
+  padding: 3px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+/* ═══════════════════════════════════════════════
+   CAPTION CARD
+   ═══════════════════════════════════════════════ */
+.caption-card {
+  text-align: center;
+  padding: 24px 32px;
+  margin: -20px auto 0;
+  max-width: 420px;
+  position: relative;
+  z-index: 2;
+}
+.caption-card p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+
+/* ═══════════════════════════════════════════════
+   INFO STRIP
+   ═══════════════════════════════════════════════ */
+.info-strip {
+  background: var(--bg-accent);
+  padding: 48px 24px;
+  margin-top: 56px;
+}
+
+.info-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+.info-icon { font-size: 22px; }
+.info-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.info-item a, .info-item span {
+  color: var(--text-on-dark);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.info-item a {
+  transition: color var(--transition);
+}
+.info-item a:hover { color: var(--gold); }
+
+/* ═══════════════════════════════════════════════
+   INSTAGRAM SECTION
+   ═══════════════════════════════════════════════ */
+.instagram-section {
+  padding: 80px 24px;
+}
+
+.ig-scroll {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.ig-scroll::-webkit-scrollbar { height: 6px; }
+.ig-scroll::-webkit-scrollbar-track { background: transparent; }
+.ig-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.ig-card {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+  min-height: 420px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--transition), border-color var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.ig-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--accent);
+}
+
+.ig-card .instagram-media {
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  flex: 1;
+}
+
+.ig-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+  min-height: 400px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #fff;
+}
+.ig-fallback-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+.ig-fallback-label {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 6px;
+}
+.ig-fallback-handle {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.ig-fallback-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  transition: background var(--transition);
+}
+.ig-fallback-link:hover { background: rgba(255,255,255,0.35); }
+
+/* ═══════════════════════════════════════════════
+   REVIEWS
+   ═══════════════════════════════════════════════ */
+.reviews-section {
+  padding: 80px 24px;
+  background: var(--bg-secondary);
+  transition: background var(--transition);
+}
+
+.reviews-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.review-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+.review-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.review-stars { color: var(--star-active); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+.review-text {
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.65;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.review-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.review-name { font-weight: 600; color: var(--text-primary); }
+.review-month { opacity: 0.7; }
+.review-ig {
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: 6px;
+}
+
+.no-reviews {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 40px 0;
+}
+
+/* ═══════════════════════════════════════════════
+   REVIEW FORM
+   ═══════════════════════════════════════════════ */
+.review-form-section {
+  padding: 80px 24px;
+}
+
+.review-form {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="url"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 15px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46, 91, 110, 0.12);
+}
+
+.star-rating {
+  display: flex;
+  gap: 4px;
+}
+.star-rating button {
+  font-size: 30px;
+  color: var(--star);
+  transition: color 0.15s, transform 0.15s;
+  padding: 4px;
+  line-height: 1;
+}
+.star-rating button.active { color: var(--star-active); }
+.star-rating button.hovered { color: var(--star-active); opacity: 0.7; }
+.star-rating button:hover { transform: scale(1.15); }
+
+.contact-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.contact-opt {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  transition: all var(--transition);
+}
+.contact-opt.active {
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.consent-label {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 400 !important;
+  cursor: pointer;
+  color: var(--text-secondary) !important;
+  line-height: 1.5 !important;
+}
+.consent-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  font-size: 15px;
+}
+
+.form-status {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  min-height: 20px;
+}
+.form-status.success { color: var(--success); }
+.form-status.error { color: var(--error); }
+
+/* ═══════════════════════════════════════════════
+   VISIT SECTION
+   ═══════════════════════════════════════════════ */
+.visit-section {
+  background: var(--bg-accent);
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.visit-inner h2 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--text-on-dark);
+  margin-bottom: 24px;
+}
+
+.visit-address {
+  max-width: 500px;
+  margin: 0 auto 32px;
+}
+.visit-address a {
+  color: var(--text-on-dark);
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.85;
+  transition: opacity var(--transition);
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.3);
+  text-underline-offset: 3px;
+}
+.visit-address a:hover { opacity: 1; text-decoration-color: var(--gold); }
+
+.visit-links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.visit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius);
+  color: var(--text-on-dark);
+  font-size: 15px;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+.visit-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════ */
+.footer {
+  background: var(--bg-footer);
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.footer-brand {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  display: block;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.footer-links a {
+  color: var(--text-muted-dark);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+.footer-links a:hover { color: var(--gold); }
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--text-muted-dark);
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════
+   AUTH MODAL
+   ═══════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition), visibility var(--transition);
+  padding: 24px;
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+
+.modal {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform var(--transition), background var(--transition);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.modal-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  transition: all var(--transition);
+}
+.modal-close:hover { color: var(--text-primary); }
+
+.btn-google {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all var(--transition);
+}
+.btn-google:hover {
+  border-color: var(--accent);
+  box-shadow: var(--card-shadow);
+}
+.btn-google svg { flex-shrink: 0; }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.auth-divider::before, .auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.phone-input-group {
+  display: flex;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border);
+}
+.phone-input-group input {
+  flex: 1;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  outline: none;
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color var(--transition);
+}
+.btn-link:hover { color: var(--accent-hover); }
+
+.auth-error {
+  color: var(--error);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+.auth-step { display: none; }
+.auth-step.active { display: block; }
+
+.otp-input {
+  width: 100%;
+  padding: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 18px;
+  letter-spacing: 0.3em;
+  text-align: center;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  outline: none;
+  margin-bottom: 12px;
+}
+.otp-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46, 91, 110, 0.12);
+}
+
+/* ═══════════════════════════════════════════════
+   OWNER PANEL
+   ═══════════════════════════════════════════════ */
+.owner-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 440px;
+  max-width: 100vw;
+  height: 100vh;
+  background: var(--card-bg);
+  box-shadow: -4px 0 40px rgba(0,0,0,0.15);
+  z-index: 250;
+  overflow-y: auto;
+  padding: 28px 24px;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform var(--transition), visibility var(--transition), background var(--transition);
+}
+.owner-panel.open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-header h3 {
+  font-size: 20px;
+}
+
+.panel-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.panel-tab {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  transition: all var(--transition);
+}
+.panel-tab.active {
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
+}
+
+.panel-content { display: none; }
+.panel-content.active { display: block; }
+
+.panel-content h4 {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 20px 0 8px;
+}
+.panel-content h4:first-child { margin-top: 0; }
+
+.panel-content input[type="text"],
+.panel-content input[type="url"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  margin-bottom: 8px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.panel-content input:focus { border-color: var(--accent); }
+
+.panel-save-btn {
+  margin-top: 16px;
+  padding: 12px 20px;
+  font-size: 14px;
+}
+
+.panel-status {
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* Owner review cards */
+.owner-review-card {
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-primary);
+  transition: background var(--transition), border-color var(--transition);
+}
+.owner-review-card .review-stars { margin-bottom: 8px; }
+.owner-review-card .review-text { font-size: 14px; margin-bottom: 10px; }
+
+.review-status-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+.badge-pending { background: #FFF3CD; color: #856404; }
+.badge-approved { background: #D4EDDA; color: #155724; }
+.badge-hidden { background: #F8D7DA; color: #721C24; }
+
+[data-theme="night"] .badge-pending { background: #3D3519; color: #E8C94A; }
+[data-theme="night"] .badge-approved { background: #1A3324; color: #68D391; }
+[data-theme="night"] .badge-hidden { background: #3D1A1E; color: #FC8181; }
+
+.owner-review-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.owner-review-actions button {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+.owner-review-actions button:hover { border-color: var(--accent); }
+
+.action-approve { color: var(--success); }
+.action-hide { color: var(--error); }
+.action-delete { color: var(--error); opacity: 0.7; }
+
+.owner-contact-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+}
+
+.review-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+.filter-btn.active {
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
+  border-color: var(--bg-accent);
+}
+
+.owner-no-reviews {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 32px 0;
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL
+   ═══════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════
+   UTILITY
+   ═══════════════════════════════════════════════ */
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 24px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; padding: 40px 24px; gap: 36px; }
+  .hero-content { order: 1; text-align: center; }
+  .hero-desc { margin-left: auto; margin-right: auto; }
+  .hero-btns { justify-content: center; }
+  .hero-image-wrap { order: 2; max-height: 450px; }
+  .info-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-h: 56px;
+    --announce-h: 32px;
+  }
+
+  .shop-name { display: none; }
+
+  .nav-toggle { display: flex; }
+
+  .nav {
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition), padding var(--transition);
+  }
+  .nav.open {
+    max-height: 200px;
+    padding: 8px 0;
+  }
+  .nav a {
+    padding: 12px 24px;
+    display: block;
+    text-align: center;
+  }
+  .nav a::after { display: none; }
+
+  .owner-btn {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .ig-card { flex: 0 0 280px; min-height: 360px; }
+
+  .reviews-grid { grid-template-columns: 1fr; }
+
+  .visit-links { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 24px 16px; gap: 24px; }
+  .hero h1 { font-size: 2rem; }
+  .hero-btns { flex-direction: column; width: 100%; }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-secondary { width: 100%; justify-content: center; }
+  .hero-image-wrap { max-height: 360px; }
+
+  .info-grid { grid-template-columns: 1fr; gap: 20px; }
+
+  .ig-card { flex: 0 0 260px; min-height: 340px; }
+
+  .modal { padding: 28px 20px; }
+  .owner-panel { padding: 20px 16px; }
+
+  .contact-toggle { flex-direction: column; }
+
+  .section-title { margin-bottom: 2rem; }
+
+  .instagram-section,
+  .reviews-section,
+  .review-form-section {
+    padding: 56px 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .marquee-track { animation: none; }
+  .hero-image-wrap:hover img { transform: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     1. ANNOUNCEMENT STRIP
+     ═══════════════════════════════════════════════ -->
+<div class="announcement" role="marquee" aria-label="Announcements">
+  <div class="marquee-track" id="marquee-track">
+    <span class="marquee-inner" id="marquee-text-1">PATENT FASHION CHIRAWA&ensp;·&ensp;<span>★</span>&ensp;·&ensp;FASHION&ensp;·&ensp;FOOTWEAR&ensp;·&ensp;STYLE&ensp;·&ensp;NEW ARRIVALS&ensp;·&ensp;TRENDING NOW&ensp;·&ensp;CHIRAWA, RAJASTHAN&ensp;·&ensp;<span>★</span>&ensp;·&ensp;</span>
+    <span class="marquee-inner" id="marquee-text-2">PATENT FASHION CHIRAWA&ensp;·&ensp;<span>★</span>&ensp;·&ensp;FASHION&ensp;·&ensp;FOOTWEAR&ensp;·&ensp;STYLE&ensp;·&ensp;NEW ARRIVALS&ensp;·&ensp;TRENDING NOW&ensp;·&ensp;CHIRAWA, RAJASTHAN&ensp;·&ensp;<span>★</span>&ensp;·&ensp;</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     2. HEADER
+     ═══════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="Patent Fashion Chirawa – Home">
+      <span class="monogram" aria-hidden="true">P</span>
+      <span class="shop-name">Patent Fashion</span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="main-nav">
+      <a href="#new">New</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+        <span id="theme-icon">☾</span>
+      </button>
+      <button class="icon-btn" id="sound-toggle" aria-label="Toggle sound effects" title="Toggle sound">
+        <span id="sound-icon">🔇</span>
+      </button>
+      <button class="owner-btn" id="owner-access-btn">Owner Access</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     3. HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-content reveal">
+    <p class="hero-tag">Fashion boutique · Chirawa, Rajasthan</p>
+    <h1>Wear your own story.</h1>
+    <p class="hero-desc">Fashion and footwear in Chirawa. Visit us near Kabutar Khana on Khetri Road, close to Gitanjali Jewellers.</p>
+    <div class="hero-btns">
+      <a href="#new" class="btn-primary">Explore the edit →</a>
+      <a href="#reviews" class="btn-secondary">Customer reviews</a>
+    </div>
+  </div>
+  <div class="hero-image-wrap reveal">
+    <img
+      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
+      alt="Interior of a fashion clothing store – stock photo for illustration purposes"
+      loading="eager"
+      width="800"
+      height="1000"
+    >
+    <span class="img-credit">Illustrative image · Unsplash</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     4. CAPTION CARD
+     ═══════════════════════════════════════════════ -->
+<div class="caption-card reveal">
+  <p>"A little style, a lot of you"</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     5. INFO STRIP
+     ═══════════════════════════════════════════════ -->
+<section class="info-strip">
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">📍</span>
+      <span class="info-label">Location</span>
+      <a href="https://www.google.com/maps?q=28.240919,75.652730" target="_blank" rel="noopener">
+        Chirawa, Rajasthan 333026
+      </a>
+    </div>
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">📞</span>
+      <span class="info-label">Phone</span>
+      <a href="tel:+918619685021">86196 85021</a>
+    </div>
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">💬</span>
+      <span class="info-label">Contact</span>
+      <span>Call or DM to confirm prices and product details.</span>
+    </div>
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">📸</span>
+      <span class="info-label">Instagram</span>
+      <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener">@patentparis.com_</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     6. INSTAGRAM SECTION
+     ═══════════════════════════════════════════════ -->
+<section id="new" class="instagram-section">
+  <h2 class="section-title reveal">See what's new</h2>
+  <div class="ig-scroll" id="ig-container">
+    <!-- Instagram cards rendered by JavaScript -->
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     7. REVIEWS SECTION
+     ═══════════════════════════════════════════════ -->
+<section id="reviews" class="reviews-section">
+  <h2 class="section-title reveal">Customer reviews</h2>
+  <div id="reviews-container" class="reviews-grid"></div>
+  <p id="no-reviews" class="no-reviews" style="display:none;">No reviews yet. Be the first to share your experience!</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     8. REVIEW FORM
+     ═══════════════════════════════════════════════ -->
+<section class="review-form-section">
+  <h2 class="section-title reveal">Leave a review</h2>
+  <form id="review-form" class="review-form reveal" novalidate>
+
+    <div class="form-group">
+      <label>Your rating</label>
+      <div class="star-rating" id="star-rating" role="radiogroup" aria-label="Rating">
+        <button type="button" data-value="1" aria-label="1 star">★</button>
+        <button type="button" data-value="2" aria-label="2 stars">★</button>
+        <button type="button" data-value="3" aria-label="3 stars">★</button>
+        <button type="button" data-value="4" aria-label="4 stars">★</button>
+        <button type="button" data-value="5" aria-label="5 stars">★</button>
+      </div>
+      <input type="hidden" id="rating-input" value="">
+    </div>
+
+    <div class="form-group">
+      <label for="reviewer-name">Display name</label>
+      <input type="text" id="reviewer-name" required maxlength="50" placeholder="How should we show your name?" autocomplete="name">
+    </div>
+
+    <div class="form-group">
+      <label for="visit-month">When did you visit?</label>
+      <select id="visit-month" required>
+        <option value="">Select a month</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="review-text">Your review</label>
+      <textarea id="review-text" required maxlength="1000" rows="4" placeholder="Tell us about your experience…"></textarea>
+      <p class="form-hint"><span id="char-count">0</span>/1000</p>
+    </div>
+
+    <div class="form-group">
+      <label>Contact (choose one)</label>
+      <div class="contact-toggle">
+        <button type="button" class="contact-opt active" data-type="instagram">Instagram username</button>
+        <button type="button" class="contact-opt" data-type="email">Email</button>
+      </div>
+      <input type="text" id="contact-value" placeholder="@yourusername" maxlength="100">
+      <p class="form-hint" id="contact-hint">
+        Your Instagram username may be shown publicly alongside your review.
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label class="consent-label">
+        <input type="checkbox" id="consent" required>
+        <span>I agree to share my review publicly. My Instagram username may be displayed with my review; my email address will remain private and visible only to the shop owner.</span>
+      </label>
+    </div>
+
+    <button type="submit" class="btn-primary btn-submit" id="submit-review-btn">Submit review</button>
+    <p id="form-status" class="form-status"></p>
+  </form>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     9. VISIT SECTION
+     ═══════════════════════════════════════════════ -->
+<section id="visit" class="visit-section">
+  <div class="visit-inner reveal">
+    <h2>Find us.</h2>
+    <p class="visit-address">
+      <a href="https://www.google.com/maps?q=28.240919,75.652730" target="_blank" rel="noopener">
+        Near Kabutar Khana, Khetri Road, near Gitanjali Jewellers,<br>Chirawa, Rajasthan 333026
+      </a>
+    </p>
+    <div class="visit-links">
+      <a href="tel:+918619685021" class="visit-link">📞 86196 85021</a>
+      <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener" class="visit-link">📸 @patentparis.com_</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     10. FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-brand">Patent Fashion Chirawa</span>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="#reviews">Reviews</a>
+      <a href="https://www.google.com/maps?q=28.240919,75.652730" target="_blank" rel="noopener">Map</a>
+      <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@patentfashion" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+    <p class="footer-copy">&copy; 2026 Patent Fashion Chirawa</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     AUTH MODAL
+     ═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="auth-modal" aria-hidden="true" role="dialog" aria-label="Owner sign-in">
+  <div class="modal">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close">&times;</button>
+    <h3>Owner Access</h3>
+    <p class="modal-subtitle">Sign in to manage your shop.</p>
+
+    <!-- Step 1: Choose method -->
+    <div class="auth-step active" id="auth-step-1">
+      <button class="btn-google" id="google-signin-btn" type="button">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 000 24c0 3.77.87 7.35 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="auth-divider"><span>or</span></div>
+
+      <div class="phone-input-group">
+        <span class="phone-prefix">+91</span>
+        <input type="tel" id="phone-input" placeholder="Phone number" maxlength="10" autocomplete="tel-national" inputmode="numeric" pattern="[0-9]*">
+      </div>
+      <button class="btn-primary" id="send-otp-btn" type="button" style="width:100%;">Send OTP</button>
+      <div id="recaptcha-container"></div>
+    </div>
+
+    <!-- Step 2: Enter OTP -->
+    <div class="auth-step" id="auth-step-2">
+      <p class="modal-subtitle">Enter the 6-digit code sent to your phone.</p>
+      <input type="text" class="otp-input" id="otp-input" placeholder="• • • • • •" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
+      <button class="btn-primary" id="verify-otp-btn" type="button" style="width:100%;">Verify</button>
+      <div style="text-align:center; margin-top:12px;">
+        <button class="btn-link" id="back-to-step1" type="button">← Back</button>
+      </div>
+    </div>
+
+    <p class="auth-error" id="auth-error"></p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     OWNER PANEL (slide-in)
+     ═══════════════════════════════════════════════ -->
+<div class="owner-panel" id="owner-panel" aria-hidden="true">
+  <div class="panel-header">
+    <h3>Owner Panel</h3>
+    <button class="btn-link" id="sign-out-btn" type="button">Sign out</button>
+  </div>
+
+  <div class="panel-tabs">
+    <button class="panel-tab active" data-tab="tab-settings" type="button">Settings</button>
+    <button class="panel-tab" data-tab="tab-reviews" type="button">Reviews</button>
+  </div>
+
+  <!-- Settings Tab -->
+  <div class="panel-content active" id="tab-settings">
+    <h4>Announcement text</h4>
+    <input type="text" id="setting-announcement" maxlength="200" placeholder="PATENT FASHION CHIRAWA · FASHION · FOOTWEAR…">
+
+    <h4>Instagram post links (5)</h4>
+    <input type="url" class="ig-link-input" data-index="0" placeholder="Instagram link 1">
+    <input type="url" class="ig-link-input" data-index="1" placeholder="Instagram link 2">
+    <input type="url" class="ig-link-input" data-index="2" placeholder="Instagram link 3">
+    <input type="url" class="ig-link-input" data-index="3" placeholder="Instagram link 4">
+    <input type="url" class="ig-link-input" data-index="4" placeholder="Instagram link 5">
+
+    <button class="btn-primary panel-save-btn" id="save-settings-btn" type="button">Save settings</button>
+    <p class="panel-status form-status" id="settings-status"></p>
+  </div>
+
+  <!-- Reviews Tab -->
+  <div class="panel-content" id="tab-reviews">
+    <div class="review-filter">
+      <button class="filter-btn active" data-filter="pending" type="button">Pending</button>
+      <button class="filter-btn" data-filter="approved" type="button">Approved</button>
+      <button class="filter-btn" data-filter="hidden" type="button">Hidden</button>
+    </div>
+    <div id="owner-reviews-list"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     FIREBASE SDK
+     ═══════════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
+
+<script>
+/* =================================================================
+   ██████  CONFIGURATION — FILL IN YOUR VALUES  ██████
+   =================================================================
+
+   ┌─────────────────────────────────────────────────────────────────┐
+   │  PLACEHOLDER 1 — Firebase Web Config                          │
+   │  Find these in Firebase Console → Project Settings → Web app  │
+   │  Copy the values for YOUR "patent-fashion-chirawa" project.   │
+   └─────────────────────────────────────────────────────────────────┘ */
+
+const FIREBASE_CONFIG = {
+  apiKey:            "PASTE_YOUR_API_KEY_HERE",           // ← REPLACE
+  authDomain:        "patent-fashion-chirawa.firebaseapp.com",
+  projectId:         "patent-fashion-chirawa",
+  storageBucket:     "patent-fashion-chirawa.firebasestorage.app",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",        // ← REPLACE
+  appId:             "PASTE_YOUR_APP_ID_HERE"             // ← REPLACE
+};
+
+/* ┌─────────────────────────────────────────────────────────────────┐
+   │  PLACEHOLDER 2 — Owner Phone Number                           │
+   │  Format: +91 followed by 10 digits, e.g. "+918619685021"     │
+   └─────────────────────────────────────────────────────────────────┘ */
+
+const OWNER_PHONE = "+91XXXXXXXXXX";   // ← REPLACE with owner's phone (e.g. "+918619685021")
+
+/* ┌─────────────────────────────────────────────────────────────────┐
+   │  PLACEHOLDER 3 — Owner Google Email                           │
+   │  The Google account email the owner uses with "Continue       │
+   │  with Google". Must match the email in Firestore rules.       │
+   └─────────────────────────────────────────────────────────────────┘ */
+
+const OWNER_EMAIL = "OWNER_EMAIL@gmail.com";  // ← REPLACE with owner's Google email
+
+/* ================================================================= */
+
+const DEFAULT_IG_LINKS = [
+  "https://www.instagram.com/reel/DfEJliTRoDx/",
+  "https://www.instagram.com/p/DfCZaRHH_Hx/",
+  "https://www.instagram.com/reel/DfBpUcDxPXj/",
+  "https://www.instagram.com/reel/De_FAIgxZir/",
+  "https://www.instagram.com/reel/De8o3QYRzbM/"
+];
+
+const INACTIVITY_MS = 15 * 60 * 1000; // 15 minutes
+
+/* =================================================================
+   FIREBASE INITIALIZATION
+   ================================================================= */
+let db = null;
+let auth = null;
+let firebaseReady = false;
+
+try {
+  if (FIREBASE_CONFIG.apiKey && !FIREBASE_CONFIG.apiKey.includes("PASTE_YOUR")) {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    auth = firebase.auth();
+    firebaseReady = true;
+  } else {
+    console.warn("⚠️ Firebase not configured. Replace the placeholder values in FIREBASE_CONFIG.");
+  }
+} catch (err) {
+  console.error("Firebase initialization error:", err);
+}
+
+/* =================================================================
+   THEME MANAGEMENT
+   ================================================================= */
+const themeToggle = document.getElementById("theme-toggle");
+const themeIcon = document.getElementById("theme-icon");
+const root = document.documentElement;
+
+function getTheme() {
+  return localStorage.getItem("pf-theme") || "day";
+}
+
+function setTheme(t) {
+  root.setAttribute("data-theme", t);
+  localStorage.setItem("pf-theme", t);
+  themeIcon.textContent = t === "night" ? "☀" : "☾";
+  themeToggle.setAttribute("aria-label", t === "night" ? "Switch to day mode" : "Switch to night mode");
+}
+
+setTheme(getTheme());
+
+themeToggle.addEventListener("click", () => {
+  const next = root.getAttribute("data-theme") === "day" ? "night" : "day";
+  setTheme(next);
+  playClick();
+});
+
+/* =================================================================
+   SOUND MANAGEMENT
+   ================================================================= */
+let soundEnabled = localStorage.getItem("pf-sound") === "on";
+const soundToggle = document.getElementById("sound-toggle");
+const soundIcon = document.getElementById("sound-icon");
+let audioCtx = null;
+
+function updateSoundUI() {
+  soundIcon.textContent = soundEnabled ? "🔊" : "🔇";
+  soundToggle.setAttribute("aria-label", soundEnabled ? "Mute sound effects" : "Enable sound effects");
+}
+updateSoundUI();
+
+soundToggle.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  localStorage.setItem("pf-sound", soundEnabled ? "on" : "off");
+  updateSoundUI();
+  if (soundEnabled) playClick();
+});
+
+function playClick() {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = "sine";
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.08);
+  } catch (_) { /* audio not available */ }
+}
+
+// Attach click sound to interactive buttons
+document.addEventListener("click", (e) => {
+  if (e.target.closest("button, .btn-primary, .btn-secondary")) playClick();
+});
+
+/* =================================================================
+   MOBILE NAVIGATION
+   ================================================================= */
+const navToggle = document.getElementById("nav-toggle");
+const mainNav = document.getElementById("main-nav");
+
+navToggle.addEventListener("click", () => {
+  const open = mainNav.classList.toggle("open");
+  navToggle.classList.toggle("open", open);
+  navToggle.setAttribute("aria-expanded", open);
+});
+
+// Close nav when a link is clicked
+mainNav.querySelectorAll("a").forEach(a => {
+  a.addEventListener("click", () => {
+    mainNav.classList.remove("open");
+    navToggle.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  });
+});
+
+/* =================================================================
+   SCROLL REVEAL
+   ================================================================= */
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+} else {
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));
+}
+
+/* =================================================================
+   VISIT MONTH SELECTOR
+   ================================================================= */
+(function populateMonths() {
+  const sel = document.getElementById("visit-month");
+  const now = new Date();
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  for (let i = 0; i < 13; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const label = months[d.getMonth()] + " " + d.getFullYear();
+    const opt = document.createElement("option");
+    opt.value = label;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  }
+})();
+
+/* =================================================================
+   STAR RATING
+   ================================================================= */
+const starBtns = document.querySelectorAll("#star-rating button");
+const ratingInput = document.getElementById("rating-input");
+
+starBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = parseInt(btn.dataset.value);
+    ratingInput.value = val;
+    starBtns.forEach(b => {
+      b.classList.toggle("active", parseInt(b.dataset.value) <= val);
+    });
+  });
+  btn.addEventListener("mouseenter", () => {
+    const val = parseInt(btn.dataset.value);
+    starBtns.forEach(b => {
+      b.classList.toggle("hovered", parseInt(b.dataset.value) <= val && !b.classList.contains("active"));
+    });
+  });
+  btn.addEventListener("mouseleave", () => {
+    starBtns.forEach(b => b.classList.remove("hovered"));
+  });
+});
+
+/* =================================================================
+   CONTACT TYPE TOGGLE
+   ================================================================= */
+const contactOpts = document.querySelectorAll(".contact-opt");
+const contactInput = document.getElementById("contact-value");
+const contactHint = document.getElementById("contact-hint");
+let contactType = "instagram";
+
+contactOpts.forEach(opt => {
+  opt.addEventListener("click", () => {
+    contactOpts.forEach(o => o.classList.remove("active"));
+    opt.classList.add("active");
+    contactType = opt.dataset.type;
+    if (contactType === "instagram") {
+      contactInput.placeholder = "@yourusername";
+      contactInput.type = "text";
+      contactHint.textContent = "Your Instagram username may be shown publicly alongside your review.";
+    } else {
+      contactInput.placeholder = "you@email.com";
+      contactInput.type = "email";
+      contactHint.textContent = "Your email stays private. Only the shop owner can see it.";
+    }
+    contactInput.value = "";
+  });
+});
+
+/* Character counter */
+const reviewText = document.getElementById("review-text");
+const charCount = document.getElementById("char-count");
+reviewText.addEventListener("input", () => {
+  charCount.textContent = reviewText.value.length;
+});
+
+/* =================================================================
+   INSTAGRAM SECTION
+   ================================================================= */
+let currentIgLinks = [...DEFAULT_IG_LINKS];
+
+function renderInstagramCards(links) {
+  const container = document.getElementById("ig-container");
+  container.innerHTML = "";
+
+  links.forEach((url, i) => {
+    if (!url) return;
+    const isReel = url.includes("/reel/");
+    const card = document.createElement("div");
+    card.className = "ig-card";
+
+    // Try native embed
+    card.innerHTML = `
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="${escapeHtml(url)}"
+        data-instgrm-version="14"
+        style="width:100%; margin:0; border:0; padding:0; min-width:0;">
+        <div class="ig-fallback">
+          <div class="ig-fallback-icon">${isReel ? "🎬" : "📷"}</div>
+          <p class="ig-fallback-label">${isReel ? "Reel" : "Post"} ${i + 1}</p>
+          <p class="ig-fallback-handle">@patentparis.com_</p>
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="ig-fallback-link">
+            View on Instagram →
+          </a>
+        </div>
+      </blockquote>`;
+
+    container.appendChild(card);
+  });
+
+  // Re-process Instagram embeds
+  if (window.instgrm && window.instgrm.Embeds) {
+    window.instgrm.Embeds.process();
+  }
+}
+
+function escapeHtml(str) {
+  const d = document.createElement("div");
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// Load Instagram embed script
+function loadInstagramEmbed() {
+  if (document.querySelector('script[src*="instagram.com/embed"]')) return;
+  const s = document.createElement("script");
+  s.src = "https://www.instagram.com/embed.js";
+  s.async = true;
+  s.onload = () => {
+    if (window.instgrm && window.instgrm.Embeds) {
+      window.instgrm.Embeds.process();
+    }
+  };
+  document.body.appendChild(s);
+}
+
+/* =================================================================
+   PUBLIC REVIEWS — LOAD FROM FIRESTORE
+   ================================================================= */
+let publicReviewsLoaded = false;
+
+function loadPublicReviews() {
+  const container = document.getElementById("reviews-container");
+  const noReviews = document.getElementById("no-reviews");
+
+  if (!firebaseReady) {
+    noReviews.style.display = "block";
+    noReviews.textContent = "Reviews will appear once the shop is fully set up.";
+    return;
+  }
+
+  db.collection("reviews")
+    .where("status", "==", "approved")
+    .orderBy("createdAt", "desc")
+    .limit(20)
+    .onSnapshot((snapshot) => {
+      container.innerHTML = "";
+      if (snapshot.empty) {
+        noReviews.style.display = "block";
+        return;
+      }
+      noReviews.style.display = "none";
+
+      snapshot.forEach(doc => {
+        const r = doc.data();
+        const card = document.createElement("div");
+        card.className = "review-card reveal revealed";
+        card.innerHTML = `
+          <div class="review-stars">${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</div>
+          <p class="review-text">"${escapeHtml(r.text)}"</p>
+          <div class="review-meta">
+            <span class="review-name">${escapeHtml(r.name)}</span>
+            <span class="review-month">${escapeHtml(r.visitMonth || "")}</span>
+          </div>
+          ${r.instagramHandle ? `<p class="review-ig">${escapeHtml(r.instagramHandle)}</p>` : ""}
+        `;
+        container.appendChild(card);
+      });
+
+      publicReviewsLoaded = true;
+    }, (err) => {
+      console.error("Error loading reviews:", err);
+      noReviews.style.display = "block";
+      noReviews.textContent = "Could not load reviews right now.";
+    });
+}
+
+/* =================================================================
+   REVIEW FORM SUBMISSION
+   ================================================================= */
+const reviewForm = document.getElementById("review-form");
+const formStatus = document.getElementById("form-status");
+
+reviewForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  formStatus.textContent = "";
+  formStatus.className = "form-status";
+
+  if (!firebaseReady) {
+    showFormError("Reviews are not available until the shop is fully configured.");
+    return;
+  }
+
+  const rating = parseInt(ratingInput.value);
+  if (!rating || rating < 1 || rating > 5) {
+    showFormError("Please select a rating.");
+    return;
+  }
+
+  const name = document.getElementById("reviewer-name").value.trim();
+  if (!name) { showFormError("Please enter your display name."); return; }
+
+  const visitMonth = document.getElementById("visit-month").value;
+  if (!visitMonth) { showFormError("Please select when you visited."); return; }
+
+  const text = reviewText.value.trim();
+  if (!text) { showFormError("Please write your review."); return; }
+
+  const contact = contactInput.value.trim();
+  if (!contact) { showFormError("Please provide your contact information."); return; }
+
+  const consent = document.getElementById("consent").checked;
+  if (!consent) { showFormError("Please agree to share your review publicly."); return; }
+
+  const submitBtn = document.getElementById("submit-review-btn");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting…";
+
+  try {
+    const batch = db.batch();
+    const reviewRef = db.collection("reviews").doc();
+    const privateRef = db.collection("reviewPrivate").doc(reviewRef.id);
+    const now = firebase.firestore.FieldValue.serverTimestamp();
+
+    // Public review data — never includes email
+    const reviewData = {
+      name: name,
+      rating: rating,
+      text: text,
+      visitMonth: visitMonth,
+      status: "pending",
+      createdAt: now
+    };
+
+    // If contact is Instagram and user consented, include handle in public doc
+    if (contactType === "instagram") {
+      reviewData.instagramHandle = contact.startsWith("@") ? contact : "@" + contact;
+    }
+
+    batch.set(reviewRef, reviewData);
+
+    // Private contact info — owner-readable only
+    const privateData = {
+      contactType: contactType,
+      contactValue: contact,
+      reviewerName: name,
+      createdAt: now
+    };
+    batch.set(privateRef, privateData);
+
+    await batch.commit();
+
+    formStatus.textContent = "Thank you! Your review will appear after the owner approves it.";
+    formStatus.className = "form-status success";
+    reviewForm.reset();
+    ratingInput.value = "";
+    starBtns.forEach(b => b.classList.remove("active"));
+    charCount.textContent = "0";
+    contactOpts[0].click();
+  } catch (err) {
+    console.error("Review submission error:", err);
+    showFormError("Something went wrong. Please try again.");
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit review";
+  }
+});
+
+function showFormError(msg) {
+  formStatus.textContent = msg;
+  formStatus.className = "form-status error";
+}
+
+/* =================================================================
+   AUTHENTICATION
+   ================================================================= */
+let confirmationResult = null;
+let recaptchaVerifier = null;
+let ownerUser = null;
+let inactivityTimer = null;
+
+const authModal = document.getElementById("auth-modal");
+const authStep1 = document.getElementById("auth-step-1");
+const authStep2 = document.getElementById("auth-step-2");
+const authError = document.getElementById("auth-error");
+const ownerPanel = document.getElementById("owner-panel");
+const ownerAccessBtn = document.getElementById("owner-access-btn");
+
+function showAuthError(msg) {
+  authError.textContent = msg;
+}
+
+function clearAuthError() {
+  authError.textContent = "";
+}
+
+function openAuthModal() {
+  authModal.classList.add("open");
+  authModal.setAttribute("aria-hidden", "false");
+  clearAuthError();
+  showAuthStep(1);
+}
+
+function closeAuthModal() {
+  authModal.classList.remove("open");
+  authModal.setAttribute("aria-hidden", "true");
+  clearAuthError();
+}
+
+function showAuthStep(n) {
+  authStep1.classList.toggle("active", n === 1);
+  authStep2.classList.toggle("active", n === 2);
+}
+
+function isOwner(user) {
+  if (!user) return false;
+  return (user.phoneNumber === OWNER_PHONE) || (user.email && user.email.toLowerCase() === OWNER_EMAIL.toLowerCase());
+}
+
+// Owner Access button
+ownerAccessBtn.addEventListener("click", () => {
+  if (ownerUser) {
+    openOwnerPanel();
+  } else {
+    openAuthModal();
+  }
+});
+
+// Close modal
+document.getElementById("modal-close-btn").addEventListener("click", closeAuthModal);
+authModal.addEventListener("click", (e) => {
+  if (e.target === authModal) closeAuthModal();
+});
+
+// Google sign-in
+document.getElementById("google-signin-btn").addEventListener("click", async () => {
+  if (!firebaseReady) { showAuthError("Firebase not configured."); return; }
+  clearAuthError();
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    await auth.signInWithPopup(provider);
+    // onAuthStateChanged will handle the rest
+  } catch (err) {
+    if (err.code !== "auth/popup-closed-by-user") {
+      showAuthError(err.message || "Google sign-in failed.");
+    }
+  }
+});
+
+// Phone sign-in — Send OTP
+document.getElementById("send-otp-btn").addEventListener("click", async () => {
+  if (!firebaseReady) { showAuthError("Firebase not configured."); return; }
+  clearAuthError();
+
+  const phone = document.getElementById("phone-input").value.trim();
+  if (!phone || phone.length < 10) {
+    showAuthError("Enter a valid 10-digit phone number.");
+    return;
+  }
+
+  const fullPhone = "+91" + phone.replace(/\D/g, "").slice(-10);
+
+  try {
+    // Clear previous reCAPTCHA
+    if (recaptchaVerifier) {
+      recaptchaVerifier.clear();
+      recaptchaVerifier = null;
+    }
+    document.getElementById("recaptcha-container").innerHTML = "";
+
+    recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+      size: "invisible",
+      callback: () => { /* reCAPTCHA solved */ },
+      "expired-callback": () => { showAuthError("reCAPTCHA expired. Try again."); }
+    });
+
+    confirmationResult = await auth.signInWithPhoneNumber(fullPhone, recaptchaVerifier);
+    showAuthStep(2);
+    document.getElementById("otp-input").focus();
+  } catch (err) {
+    console.error("OTP send error:", err);
+    showAuthError(err.message || "Failed to send OTP.");
+    if (recaptchaVerifier) {
+      recaptchaVerifier.clear();
+      recaptchaVerifier = null;
+    }
+  }
+});
+
+// Phone sign-in — Verify OTP
+document.getElementById("verify-otp-btn").addEventListener("click", async () => {
+  clearAuthError();
+  const code = document.getElementById("otp-input").value.trim();
+  if (code.length !== 6) {
+    showAuthError("Enter the 6-digit OTP.");
+    return;
+  }
+  if (!confirmationResult) {
+    showAuthError("Session expired. Go back and resend OTP.");
+    return;
+  }
+  try {
+    await confirmationResult.confirm(code);
+    // onAuthStateChanged will handle the rest
+  } catch (err) {
+    console.error("OTP verify error:", err);
+    showAuthError("Invalid OTP. Please try again.");
+  }
+});
+
+// Back button
+document.getElementById("back-to-step1").addEventListener("click", () => {
+  showAuthStep(1);
+  clearAuthError();
+});
+
+// Auth state listener
+if (firebaseReady) {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      if (isOwner(user)) {
+        ownerUser = user;
+        closeAuthModal();
+        ownerAccessBtn.textContent = "Owner Panel";
+        openOwnerPanel();
+        loadOwnerData();
+        startInactivityTimer();
+      } else {
+        // Not the owner — sign out immediately
+        showAuthError("This account is not authorized as the shop owner.");
+        auth.signOut();
+        ownerUser = null;
+      }
+    } else {
+      ownerUser = null;
+      ownerAccessBtn.textContent = "Owner Access";
+      closeOwnerPanel();
+      stopInactivityTimer();
+    }
+  });
+}
+
+// Sign out
+document.getElementById("sign-out-btn").addEventListener("click", () => {
+  if (auth) auth.signOut();
+});
+
+/* =================================================================
+   INACTIVITY TIMER
+   ================================================================= */
+function startInactivityTimer() {
+  stopInactivityTimer();
+  resetInactivityTimer();
+  document.addEventListener("click", resetInactivityTimer);
+  document.addEventListener("keydown", resetInactivityTimer);
+  document.addEventListener("touchstart", resetInactivityTimer);
+}
+
+function stopInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  document.removeEventListener("click", resetInactivityTimer);
+  document.removeEventListener("keydown", resetInactivityTimer);
+  document.removeEventListener("touchstart", resetInactivityTimer);
+}
+
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => {
+    if (auth && ownerUser) {
+      auth.signOut();
+    }
+  }, INACTIVITY_MS);
+}
+
+/* =================================================================
+   OWNER PANEL
+   ================================================================= */
+function openOwnerPanel() {
+  ownerPanel.classList.add("open");
+  ownerPanel.setAttribute("aria-hidden", "false");
+}
+
+function closeOwnerPanel() {
+  ownerPanel.classList.remove("open");
+  ownerPanel.setAttribute("aria-hidden", "true");
+}
+
+// Panel tabs
+document.querySelectorAll(".panel-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".panel-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".panel-content").forEach(c => c.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.tab).classList.add("active");
+  });
+});
+
+/* =================================================================
+   LOAD / SAVE SHOP SETTINGS
+   ================================================================= */
+function loadOwnerData() {
+  loadShopSettings();
+  loadOwnerReviews();
+}
+
+function loadShopSettings() {
+  if (!firebaseReady) return;
+
+  db.collection("shopSettings").doc("main").get()
+    .then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.announcement) {
+          document.getElementById("setting-announcement").value = data.announcement;
+          updateMarqueeText(data.announcement);
+        }
+        if (data.instagramLinks && Array.isArray(data.instagramLinks)) {
+          const inputs = document.querySelectorAll(".ig-link-input");
+          data.instagramLinks.forEach((link, i) => {
+            if (inputs[i]) inputs[i].value = link || "";
+          });
+          currentIgLinks = data.instagramLinks;
+        }
+      }
+      // Render IG cards with whatever links we have
+      renderInstagramCards(currentIgLinks);
+      loadInstagramEmbed();
+    })
+    .catch(err => {
+      console.error("Error loading settings:", err);
+      renderInstagramCards(currentIgLinks);
+      loadInstagramEmbed();
+    });
+}
+
+document.getElementById("save-settings-btn").addEventListener("click", async () => {
+  if (!firebaseReady || !ownerUser) return;
+
+  const statusEl = document.getElementById("settings-status");
+  statusEl.textContent = "Saving…";
+  statusEl.className = "panel-status form-status";
+
+  const announcement = document.getElementById("setting-announcement").value.trim();
+  const igLinks = [];
+  document.querySelectorAll(".ig-link-input").forEach(input => {
+    igLinks.push(input.value.trim());
+  });
+
+  try {
+    await db.collection("shopSettings").doc("main").set({
+      announcement: announcement,
+      instagramLinks: igLinks,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    if (announcement) updateMarqueeText(announcement);
+    currentIgLinks = igLinks;
+    renderInstagramCards(currentIgLinks);
+    loadInstagramEmbed();
+
+    statusEl.textContent = "Saved!";
+    statusEl.className = "panel-status form-status success";
+  } catch (err) {
+    console.error("Save settings error:", err);
+    statusEl.textContent = "Error saving settings.";
+    statusEl.className = "panel-status form-status error";
+  }
+});
+
+function updateMarqueeText(text) {
+  const t1 = document.getElementById("marquee-text-1");
+  const t2 = document.getElementById("marquee-text-2");
+  if (t1) t1.textContent = text + "  ·  ";
+  if (t2) t2.textContent = text + "  ·  ";
+}
+
+/* =================================================================
+   OWNER REVIEWS MANAGEMENT
+   ================================================================= */
+let allOwnerReviews = [];
+let currentFilter = "pending";
+let ownerReviewsUnsubscribe = null;
+
+function loadOwnerReviews() {
+  if (!firebaseReady) return;
+
+  // Clean up previous listener
+  if (ownerReviewsUnsubscribe) ownerReviewsUnsubscribe();
+
+  ownerReviewsUnsubscribe = db.collection("reviews")
+    .orderBy("createdAt", "desc")
+    .onSnapshot(async (snapshot) => {
+      allOwnerReviews = [];
+      const privatePromises = [];
+
+      snapshot.forEach(doc => {
+        const data = { id: doc.id, ...doc.data() };
+        allOwnerReviews.push(data);
+        // Load private contact info
+        privatePromises.push(
+          db.collection("reviewPrivate").doc(doc.id).get()
+            .then(pDoc => {
+              if (pDoc.exists) data._private = pDoc.data();
+            })
+            .catch(() => {})
+        );
+      });
+
+      await Promise.all(privatePromises);
+      renderOwnerReviews();
+    }, (err) => {
+      console.error("Error loading owner reviews:", err);
+    });
+}
+
+// Filter buttons
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    renderOwnerReviews();
+  });
+});
+
+function renderOwnerReviews() {
+  const container = document.getElementById("owner-reviews-list");
+  const filtered = allOwnerReviews.filter(r => r.status === currentFilter);
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<p class="owner-no-reviews">No ${currentFilter} reviews.</p>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(r => {
+    const badgeClass = r.status === "pending" ? "badge-pending" :
+                       r.status === "approved" ? "badge-approved" : "badge-hidden";
+    const priv = r._private;
+    const contactInfo = priv
+      ? `<div class="owner-contact-info">
+           <strong>${escapeHtml(priv.contactType || "contact")}:</strong> ${escapeHtml(priv.contactValue || "N/A")}
+         </div>`
+      : "";
+
+    let actions = "";
+    if (r.status === "pending") {
+      actions = `
+        <button class="action-approve" onclick="updateReviewStatus('${r.id}', 'approved')">✓ Approve</button>
+        <button class="action-hide" onclick="updateReviewStatus('${r.id}', 'hidden')">✕ Hide</button>`;
+    } else if (r.status === "approved") {
+      actions = `
+        <button class="action-hide" onclick="updateReviewStatus('${r.id}', 'hidden')">✕ Hide</button>`;
+    } else {
+      actions = `
+        <button class="action-approve" onclick="updateReviewStatus('${r.id}', 'approved')">✓ Approve</button>
+        <button class="action-delete" onclick="deleteReview('${r.id}')">🗑 Delete</button>`;
+    }
+
+    return `
+      <div class="owner-review-card">
+        <span class="review-status-badge ${badgeClass}">${r.status}</span>
+        <div class="review-stars">${"★".repeat(r.rating || 0)}${"☆".repeat(5 - (r.rating || 0))}</div>
+        <p class="review-text">"${escapeHtml(r.text || "")}"</p>
+        <div class="review-meta">
+          <span class="review-name">${escapeHtml(r.name || "Anonymous")}</span>
+          <span class="review-month">${escapeHtml(r.visitMonth || "")}</span>
+        </div>
+        ${r.instagramHandle ? `<p class="review-ig">${escapeHtml(r.instagramHandle)}</p>` : ""}
+        ${contactInfo}
+        <div class="owner-review-actions">${actions}</div>
+      </div>`;
+  }).join("");
+}
+
+// Global functions for inline onclick handlers
+window.updateReviewStatus = async function(reviewId, newStatus) {
+  if (!firebaseReady || !ownerUser) return;
+  try {
+    await db.collection("reviews").doc(reviewId).update({
+      status: newStatus,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (err) {
+    console.error("Error updating review:", err);
+    alert("Failed to update review.");
+  }
+};
+
+window.deleteReview = async function(reviewId) {
+  if (!firebaseReady || !ownerUser) return;
+  if (!confirm("Permanently delete this review?")) return;
+  try {
+    const batch = db.batch();
+    batch.delete(db.collection("reviews").doc(reviewId));
+    batch.delete(db.collection("reviewPrivate").doc(reviewId));
+    await batch.commit();
+  } catch (err) {
+    console.error("Error deleting review:", err);
+    alert("Failed to delete review.");
+  }
+};
+
+/* =================================================================
+   LOAD PUBLIC DATA ON PAGE LOAD
+   ================================================================= */
+function loadPublicShopSettings() {
+  if (!firebaseReady) {
+    renderInstagramCards(currentIgLinks);
+    loadInstagramEmbed();
+    return;
+  }
+
+  db.collection("shopSettings").doc("main").get()
+    .then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.announcement) updateMarqueeText(data.announcement);
+        if (data.instagramLinks && Array.isArray(data.instagramLinks)) {
+          currentIgLinks = data.instagramLinks.filter(l => l);
+          if (currentIgLinks.length === 0) currentIgLinks = [...DEFAULT_IG_LINKS];
+        }
+      }
+      renderInstagramCards(currentIgLinks);
+      loadInstagramEmbed();
+    })
+    .catch(err => {
+      console.error("Error loading public settings:", err);
+      renderInstagramCards(currentIgLinks);
+      loadInstagramEmbed();
+    });
+}
+
+/* =================================================================
+   KEYBOARD SHORTCUTS
+   ================================================================= */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (authModal.classList.contains("open")) closeAuthModal();
+    if (ownerPanel.classList.contains("open") && !ownerUser) closeOwnerPanel();
+  }
+});
+
+/* =================================================================
+   INITIALIZE
+   ================================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  loadPublicShopSettings();
+  loadPublicReviews();
+});
+</script>
+</body>
+</html>
+
