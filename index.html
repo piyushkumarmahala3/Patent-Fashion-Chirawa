@@ -1367,9 +1367,6 @@ h1, h2, h3, h4 {
       <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
         <span id="theme-icon">☾</span>
       </button>
-      <button class="icon-btn" id="sound-toggle" aria-label="Toggle sound effects" title="Toggle sound">
-        <span id="sound-icon">🔇</span>
-      </button>
       <button class="owner-btn" id="owner-access-btn">Owner Access</button>
     </div>
   </div>
@@ -1729,51 +1726,6 @@ setTheme(getTheme());
 themeToggle.addEventListener("click", () => {
   const next = root.getAttribute("data-theme") === "day" ? "night" : "day";
   setTheme(next);
-  playClick();
-});
-
-/* =================================================================
-   SOUND MANAGEMENT
-   ================================================================= */
-let soundEnabled = localStorage.getItem("pf-sound") === "on";
-const soundToggle = document.getElementById("sound-toggle");
-const soundIcon = document.getElementById("sound-icon");
-let audioCtx = null;
-
-function updateSoundUI() {
-  soundIcon.textContent = soundEnabled ? "🔊" : "🔇";
-  soundToggle.setAttribute("aria-label", soundEnabled ? "Mute sound effects" : "Enable sound effects");
-}
-updateSoundUI();
-
-soundToggle.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-  localStorage.setItem("pf-sound", soundEnabled ? "on" : "off");
-  updateSoundUI();
-  if (soundEnabled) playClick();
-});
-
-function playClick() {
-  if (!soundEnabled) return;
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === "suspended") audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.type = "sine";
-    osc.frequency.value = 880;
-    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-    osc.start(audioCtx.currentTime);
-    osc.stop(audioCtx.currentTime + 0.08);
-  } catch (_) { /* audio not available */ }
-}
-
-// Attach click sound to interactive buttons
-document.addEventListener("click", (e) => {
-  if (e.target.closest("button, .btn-primary, .btn-secondary")) playClick();
 });
 
 /* =================================================================
