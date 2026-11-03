@@ -1461,7 +1461,7 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
      6. INSTAGRAM SECTION
      ═══════════════════════════════════════════════ -->
 <section id="new" class="instagram-section">
-  <h2 class="section-title reveal">See what's new</h2>
+  <h2 class="section-title reveal">Fresh Fits, Just Dropped</h2>
   <div class="ig-scroll" id="ig-container">
     <!-- Instagram cards rendered by JavaScript -->
   </div>
@@ -1895,18 +1895,54 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
-// Load Instagram embed script
+// Load Instagram embeds and re-process cards after the latest-feed response arrives.
 function loadInstagramEmbed() {
-  if (document.querySelector('script[src*="instagram.com/embed"]')) return;
+  const processEmbeds = () => {
+    if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+  };
+  if (window.instgrm && window.instgrm.Embeds) {
+    processEmbeds();
+    return;
+  }
+  const existingScript = document.querySelector('script[src*="instagram.com/embed"]');
+  if (existingScript) {
+    existingScript.addEventListener("load", processEmbeds, { once: true });
+    return;
+  }
   const s = document.createElement("script");
   s.src = "https://www.instagram.com/embed.js";
   s.async = true;
-  s.onload = () => {
-    if (window.instgrm && window.instgrm.Embeds) {
-      window.instgrm.Embeds.process();
-    }
-  };
+  s.onload = processEmbeds;
   document.body.appendChild(s);
+}
+
+async function refreshInstagramFeedFromApi() {
+  try {
+    const response = await fetch("/api/instagram-feed", {
+      headers: { Accept: "application/json" },
+      cache: "no-store"
+    });
+    if (!response.ok) return;
+    const data = await response.json();
+    const videoLinks = (Array.isArray(data.videos) ? data.videos : [])
+      .map(video => video && video.permalink)
+      .filter(link => {
+        try {
+          const url = new URL(link);
+          return (url.hostname === "www.instagram.com" || url.hostname === "instagram.com") &&
+            /^\/(reel|p|tv)\/[A-Za-z0-9_-]+\/?$/.test(url.pathname);
+        } catch (_) {
+          return false;
+        }
+      })
+      .slice(0, 5);
+    if (!videoLinks.length) return;
+    currentIgLinks = videoLinks;
+    renderInstagramCards(currentIgLinks);
+    loadInstagramEmbed();
+  } catch (error) {
+    console.info("Showing saved Instagram links; automatic feed is unavailable.", error);
+  }
 }
 
 /* =================================================================
@@ -2483,6 +2519,7 @@ function loadPublicShopSettings() {
   if (!firebaseReady) {
     renderInstagramCards(currentIgLinks);
     loadInstagramEmbed();
+    refreshInstagramFeedFromApi();
     return;
   }
 
@@ -2498,11 +2535,13 @@ function loadPublicShopSettings() {
       }
       renderInstagramCards(currentIgLinks);
       loadInstagramEmbed();
+      refreshInstagramFeedFromApi();
     })
     .catch(err => {
       console.error("Error loading public settings:", err);
       renderInstagramCards(currentIgLinks);
       loadInstagramEmbed();
+      refreshInstagramFeedFromApi();
     });
 }
 
