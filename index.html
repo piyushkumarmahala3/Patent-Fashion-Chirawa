@@ -512,30 +512,29 @@ h1, h2, h3, h4 {
   padding: 80px 24px;
 }
 
+.gallery-note {
+  max-width: 660px;
+  margin: -1rem auto 2.5rem;
+  text-align: center;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
 .ig-scroll {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 16px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
 }
-.ig-scroll::-webkit-scrollbar { height: 6px; }
-.ig-scroll::-webkit-scrollbar-track { background: transparent; }
-.ig-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 .ig-card {
-  flex: 0 0 320px;
-  scroll-snap-align: start;
-  min-height: 420px;
+  min-width: 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--card-bg);
   border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
   transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow var(--transition), border-color var(--transition);
   display: flex;
   flex-direction: column;
@@ -543,17 +542,85 @@ h1, h2, h3, h4 {
 .ig-card:hover {
   box-shadow: var(--card-shadow-hover);
   border-color: var(--accent);
-  transform: translateY(-7px) scale(1.01);
+  transform: translateY(-7px);
 }
 
+.product-media {
+  min-width: 0;
+  min-height: 390px;
+  max-height: 520px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background: var(--bg-secondary);
+}
 .ig-card .instagram-media {
   margin: 0 !important;
   border: none !important;
   border-radius: 0 !important;
   min-width: 0 !important;
   width: 100% !important;
+  max-width: 100% !important;
   flex: 1;
 }
+
+.product-info {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.product-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.product-eyebrow span { color: var(--text-secondary); }
+.product-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+.product-size {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  margin: auto 0 16px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.product-size strong { color: var(--text-primary); font-weight: 600; }
+.product-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.product-enquire {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.product-enquire span { display: inline-block; transition: transform var(--transition); }
+.product-enquire:hover span { transform: translate(3px, -3px); }
+.product-call {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.product-call:hover { color: var(--text-primary); }
 
 .ig-fallback {
   display: flex;
@@ -1487,6 +1554,14 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
   .info-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
 }
 
+@media (max-width: 1024px) {
+  .ig-scroll { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+}
+@media (max-width: 680px) {
+  .ig-scroll { grid-template-columns: 1fr; gap: 18px; }
+  .product-media { min-height: 360px; max-height: 480px; }
+  .product-info { padding: 18px; }
+}
 @media (max-width: 768px) {
   :root {
     --header-h: 56px;
@@ -1527,7 +1602,6 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
     padding: 6px 10px;
   }
 
-  .ig-card { flex: 0 0 280px; min-height: 360px; }
 
   .reviews-grid { grid-template-columns: 1fr; }
 
@@ -1548,7 +1622,6 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
 
   .info-grid { grid-template-columns: 1fr; gap: 20px; }
 
-  .ig-card { flex: 0 0 260px; min-height: 340px; }
 
   .modal { padding: 28px 20px; }
   .owner-panel { padding: 20px 16px; }
@@ -1632,7 +1705,7 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
 
     <nav class="nav" id="main-nav" aria-label="Main navigation">
       <a href="#home" data-page="home">Home</a>
-      <a href="#edit" data-page="edit">The Edit</a>
+      <a href="#edit" data-page="edit">New Arrivals</a>
       <a href="#reviews" data-page="reviews">Reviews</a>
       <a href="#visit" data-page="visit">Visit</a>
     </nav>
@@ -1715,8 +1788,8 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
     <div class="journey-grid">
       <a class="journey-card reveal" href="#edit" data-page="edit">
         <span class="journey-index">01 / THE LATEST</span>
-        <h3>The Edit</h3>
-        <p>Browse the shop’s selected Instagram posts and Reels.</p>
+        <h3>New Arrivals</h3>
+        <p>Explore the shop’s latest Instagram styles and products.</p>
         <span class="journey-action">Explore the edit <b aria-hidden="true">↗</b></span>
       </a>
       <a class="journey-card reveal" href="#reviews" data-page="reviews">
@@ -1737,8 +1810,8 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
 
 <section class="page-intro reveal" data-page-view="edit" hidden>
   <p class="page-kicker">A fresh look at the shop</p>
-  <h1>The Edit</h1>
-  <p>Browse selected posts and Reels from <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener">@patentparis.com_</a>. Ask the shop about price, size and availability.</p>
+  <h1>New Arrivals</h1>
+  <p>Explore the latest looks from <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener">@patentparis.com_</a>. Sizes come from each post; message the shop to check today’s price and availability.</p>
 </section>
 
 <!-- ═══════════════════════════════════════════════
@@ -1746,14 +1819,15 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
      ═══════════════════════════════════════════════ -->
 <section id="edit" class="instagram-section" data-page-view="edit" hidden>
   <h2 class="section-title reveal">Fresh Fits, Just Dropped</h2>
-  <div class="ig-scroll" id="ig-container">
-    <!-- Instagram cards rendered by JavaScript -->
+  <p class="gallery-note reveal">Shop the newest looks from Instagram. Sizes are listed as shared in the post—message the shop to check availability.</p>
+  <div class="ig-scroll product-grid" id="ig-container" aria-label="Latest products from Instagram">
+    <!-- Product cards rendered from the shop's latest Instagram posts -->
   </div>
 </section>
 
 <section class="page-intro reveal" data-page-view="reviews" hidden>
   <p class="page-kicker">From the neighbourhood</p>
-  <h1>Customer stories</h1>
+  <h1>Customer reviews</h1>
   <p>Read reviews from shoppers and share your own experience with Patent Fashion Chirawa.</p>
   <a class="page-intro-link" href="#review-form">Write a review <span aria-hidden="true">↓</span></a>
 </section>
@@ -1984,7 +2058,18 @@ const OWNER_PHONE = "+918619685021";
 
 /* ================================================================= */
 
-const DEFAULT_IG_LINKS = [
+const FEATURED_PRODUCTS = [
+  { id: "DfRGRROx_6b", url: "https://www.instagram.com/reel/DfRGRROx_6b/", name: "Chinese boxy-fit shirt", size: "DM to confirm" },
+  { id: "DfOiO12RyVG", url: "https://www.instagram.com/reel/DfOiO12RyVG/", name: "Straight-fit lowers", size: "M–XXL" },
+  { id: "DfL6CPiReEa", url: "https://www.instagram.com/reel/DfL6CPiReEa/", name: "Premium sneakers", size: "7–11" },
+  { id: "DfKGO0qo9YU", url: "https://www.instagram.com/p/DfKGO0qo9YU/", name: "Premium apparel", size: "DM to confirm" },
+  { id: "DfJWgAfR_X1", url: "https://www.instagram.com/reel/DfJWgAfR_X1/", name: "Premium upper", size: "M–XXL" },
+  { id: "DfGxrHERAJz", url: "https://www.instagram.com/reel/DfGxrHERAJz/", name: "Trending Chinese apparel", size: "M–XXL" }
+];
+const DEFAULT_IG_LINKS = FEATURED_PRODUCTS.map(product => product.url);
+
+// Previous saved defaults are migrated to the latest verified Instagram selection.
+const LEGACY_IG_LINKS = [
   "https://www.instagram.com/reel/DfEJliTRoDx/",
   "https://www.instagram.com/p/DfCZaRHH_Hx/",
   "https://www.instagram.com/reel/DfBpUcDxPXj/",
@@ -2139,7 +2224,7 @@ if (finePointer && !reducedMotion) {
    ================================================================= */
 const pageTitles = {
   home: "Patent Fashion Chirawa – Fashion & Footwear",
-  edit: "The Edit – Patent Fashion Chirawa",
+  edit: "New Arrivals – Patent Fashion Chirawa",
   reviews: "Customer Reviews – Patent Fashion Chirawa",
   visit: "Visit Patent Fashion Chirawa"
 };
@@ -2263,36 +2348,58 @@ reviewText.addEventListener("input", () => {
 let currentIgLinks = [...DEFAULT_IG_LINKS];
 let hasManualInstagramSelection = false;
 
+function isLegacyInstagramSelection(links) {
+  return Array.isArray(links) && links.length > 0 &&
+    links.every(link => LEGACY_IG_LINKS.includes(link));
+}
+
 function renderInstagramCards(links) {
   const container = document.getElementById("ig-container");
+  if (!container) return;
   container.innerHTML = "";
 
   links.forEach((url, i) => {
     if (!url) return;
+    const idMatch = url.match(/\/(?:reel|p|tv)\/([^/]+)/);
+    const product = FEATURED_PRODUCTS.find(item =>
+      item.url === url || (idMatch && item.id === idMatch[1])
+    ) || { name: "New arrival", size: "DM to confirm" };
     const isReel = url.includes("/reel/");
-    const card = document.createElement("div");
-    card.className = "ig-card";
-
-    // Try native embed
+    const card = document.createElement("article");
+    card.className = "ig-card product-card reveal";
     card.innerHTML = `
-      <blockquote class="instagram-media"
-        data-instgrm-permalink="${escapeHtml(url)}"
-        data-instgrm-version="14"
-        style="width:100%; margin:0; border:0; padding:0; min-width:0;">
-        <div class="ig-fallback">
-          <div class="ig-fallback-icon">${isReel ? "🎬" : "📷"}</div>
-          <p class="ig-fallback-label">${isReel ? "Reel" : "Post"} ${i + 1}</p>
-          <p class="ig-fallback-handle">@patentparis.com_</p>
-          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="ig-fallback-link">
-            View on Instagram →
+      <div class="product-media">
+        <blockquote class="instagram-media"
+          data-instgrm-permalink="${escapeHtml(url)}"
+          data-instgrm-version="14"
+          style="width:100%; margin:0; border:0; padding:0; min-width:0;">
+          <div class="ig-fallback">
+            <div class="ig-fallback-icon">${isReel ? "🎬" : "📷"}</div>
+            <p class="ig-fallback-label">${isReel ? "Reel" : "Post"} ${i + 1}</p>
+            <p class="ig-fallback-handle">@patentparis.com_</p>
+            <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="ig-fallback-link">
+              View on Instagram →
+            </a>
+          </div>
+        </blockquote>
+      </div>
+      <div class="product-info">
+        <p class="product-eyebrow">New arrival <span>From Instagram</span></p>
+        <h3 class="product-title">${escapeHtml(product.name)}</h3>
+        <p class="product-size"><span>Size</span><strong>${escapeHtml(product.size)}</strong></p>
+        <div class="product-actions">
+          <a class="product-enquire" href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener" aria-label="Ask the shop about ${escapeHtml(product.name)}">
+            Ask about this look <span aria-hidden="true">↗</span>
           </a>
+          <a class="product-call" href="tel:+918619685021">Call shop</a>
         </div>
-      </blockquote>`;
+      </div>`;
 
     container.appendChild(card);
+    if (revealObserver && !reducedMotion) revealObserver.observe(card);
+    else card.classList.add("revealed");
   });
 
-  // Re-process Instagram embeds
   if (window.instgrm && window.instgrm.Embeds) {
     window.instgrm.Embeds.process();
   }
@@ -2826,9 +2933,14 @@ function loadShopSettings() {
         }
       }
 
+      if (isLegacyInstagramSelection(savedLinks)) {
+        savedLinks = DEFAULT_IG_LINKS.slice(0, 5);
+      }
+
       instagramInputs.forEach((input, index) => {
         input.value = savedLinks[index] || "";
       });
+      if (isLegacyInstagramSelection(savedLinks)) savedLinks = [];
       hasManualInstagramSelection = savedLinks.length > 0;
       currentIgLinks = hasManualInstagramSelection ? savedLinks : [...DEFAULT_IG_LINKS];
       renderInstagramCards(currentIgLinks);
