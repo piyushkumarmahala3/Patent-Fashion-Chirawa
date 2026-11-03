@@ -348,12 +348,75 @@ h1, h2, h3, h4 {
   max-width: 480px;
 }
 
-.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-.hero-btns .btn-primary,
-.hero-btns .btn-secondary {
-  translate: var(--magnetic-x, 0px) var(--magnetic-y, 0px);
-  transition: translate 0.24s cubic-bezier(0.2, 0.7, 0.2, 1), background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+.hero-proof-card {
+  max-width: 520px;
+  margin-top: 24px;
+  padding: 22px 24px 18px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  text-align: left;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
 }
+.hero-proof-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--gold);
+}
+.hero-proof-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.hero-proof-label {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.hero-proof-mark { color: var(--gold); font-size: 20px; }
+.hero-proof-main {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.hero-proof-score {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  line-height: 1.15;
+}
+.hero-proof-stars {
+  color: var(--star-active);
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.hero-proof-copy {
+  margin: 6px 0 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.hero-proof-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.hero-proof-link span { transition: transform var(--transition); }
+.hero-proof-link:hover span { transform: translate(3px, -3px); }
 
 .btn-primary {
   position: relative;
@@ -1804,9 +1867,17 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
     <p class="hero-tag">Fashion boutique · Chirawa, Rajasthan</p>
     <h1>Wear your own story.</h1>
     <p class="hero-desc">Fashion and footwear in Chirawa. Visit us near Kabutar Khana on Khetri Road, close to Gitanjali Jewellers.</p>
-    <div class="hero-btns">
-      <a href="#edit" class="btn-primary">New Arrivals →</a>
-      <a href="#reviews" class="btn-secondary">Customer reviews</a>
+    <div class="hero-proof-card reveal" aria-live="polite" aria-label="Customer rating and reviews">
+      <div class="hero-proof-top">
+        <span class="hero-proof-label" id="hero-proof-label">REAL CUSTOMER FEEDBACK</span>
+        <span class="hero-proof-mark" aria-hidden="true">✦</span>
+      </div>
+      <div class="hero-proof-main">
+        <strong class="hero-proof-score" id="hero-review-average">Start us off</strong>
+        <span class="hero-proof-stars" id="hero-review-stars" aria-label="No ratings yet">☆☆☆☆☆</span>
+      </div>
+      <p class="hero-proof-copy" id="hero-review-copy">Be the first to share your experience.</p>
+      <a class="hero-proof-link" id="hero-review-cta" href="#review-form" data-page="reviews">Write the first review <span aria-hidden="true">↗</span></a>
     </div>
   </div>
   <div class="hero-image-wrap reveal">
@@ -2648,17 +2719,40 @@ function loadPublicReviews() {
   const starsEl = document.getElementById("reviews-summary-stars");
 
   function updateReviewSummary(count, average) {
+    const hasReviews = count > 0;
+    const filled = hasReviews ? Math.round(average) : 0;
+    const stars = "★".repeat(filled) + "☆".repeat(5 - filled);
     if (averageEl) averageEl.textContent = average.toFixed(1);
     if (countEl) countEl.textContent = String(count);
     if (countLabelEl) countLabelEl.textContent = count === 1
       ? "approved customer review"
       : "approved customer reviews";
     if (starsEl) {
-      const filled = count ? Math.round(average) : 0;
-      starsEl.textContent = "★".repeat(filled) + "☆".repeat(5 - filled);
-      starsEl.setAttribute("aria-label", count
+      starsEl.textContent = stars;
+      starsEl.setAttribute("aria-label", hasReviews
         ? average.toFixed(1) + " out of 5 stars"
         : "No ratings yet");
+    }
+
+    const heroScore = document.getElementById("hero-review-average");
+    const heroStars = document.getElementById("hero-review-stars");
+    const heroLabel = document.getElementById("hero-proof-label");
+    const heroCopy = document.getElementById("hero-review-copy");
+    const heroCta = document.getElementById("hero-review-cta");
+    if (heroScore) heroScore.textContent = hasReviews ? average.toFixed(1) + " / 5" : "Start us off";
+    if (heroStars) {
+      heroStars.textContent = stars;
+      heroStars.setAttribute("aria-label", hasReviews
+        ? average.toFixed(1) + " out of 5 stars"
+        : "No ratings yet");
+    }
+    if (heroLabel) heroLabel.textContent = hasReviews ? "SHOPPER RATING" : "REAL CUSTOMER FEEDBACK";
+    if (heroCopy) heroCopy.textContent = hasReviews
+      ? "Based on " + count + " approved customer " + (count === 1 ? "review." : "reviews.")
+      : "Be the first to share your experience.";
+    if (heroCta) {
+      heroCta.href = hasReviews ? "#reviews" : "#review-form";
+      heroCta.textContent = hasReviews ? "Read customer reviews ↗" : "Write the first review ↗";
     }
   }
 
