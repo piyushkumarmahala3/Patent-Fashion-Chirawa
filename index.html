@@ -672,6 +672,53 @@ h1, h2, h3, h4 {
   transition: background var(--transition);
 }
 
+.reviews-summary {
+  max-width: 1000px;
+  margin: 0 auto 28px;
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+.reviews-summary-rating {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.reviews-summary-rating > strong {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.reviews-summary-stars {
+  color: var(--star-active);
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.reviews-summary p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.reviews-summary p strong {
+  color: var(--text-primary);
+  font-size: 1.15rem;
+}
+@media (max-width: 520px) {
+  .reviews-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px;
+  }
+  .reviews-summary-rating > strong { font-size: 1.9rem; }
+}
+
 .reviews-grid {
   max-width: 1000px;
   margin: 0 auto;
@@ -1817,6 +1864,13 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
      7. REVIEWS SECTION
      ═══════════════════════════════════════════════ -->
 <section id="reviews" class="reviews-section" data-page-view="reviews" hidden aria-labelledby="reviews-page-title">
+  <div class="reviews-summary" aria-live="polite" aria-label="Overall customer rating">
+    <div class="reviews-summary-rating">
+      <strong id="reviews-average">0.0</strong>
+      <span id="reviews-summary-stars" class="reviews-summary-stars" aria-label="0 out of 5 stars">☆☆☆☆☆</span>
+    </div>
+    <p><strong id="reviews-count">0</strong> <span id="reviews-count-label">approved customer reviews</span></p>
+  </div>
   <div id="reviews-container" class="reviews-grid"></div>
   <p id="no-reviews" class="no-reviews" style="display:none;">No reviews yet. Be the first to share your experience!</p>
 </section>
@@ -2550,8 +2604,28 @@ let publicReviewsLoaded = false;
 function loadPublicReviews() {
   const container = document.getElementById("reviews-container");
   const noReviews = document.getElementById("no-reviews");
+  const averageEl = document.getElementById("reviews-average");
+  const countEl = document.getElementById("reviews-count");
+  const countLabelEl = document.getElementById("reviews-count-label");
+  const starsEl = document.getElementById("reviews-summary-stars");
+
+  function updateReviewSummary(count, average) {
+    if (averageEl) averageEl.textContent = average.toFixed(1);
+    if (countEl) countEl.textContent = String(count);
+    if (countLabelEl) countLabelEl.textContent = count === 1
+      ? "approved customer review"
+      : "approved customer reviews";
+    if (starsEl) {
+      const filled = count ? Math.round(average) : 0;
+      starsEl.textContent = "★".repeat(filled) + "☆".repeat(5 - filled);
+      starsEl.setAttribute("aria-label", count
+        ? average.toFixed(1) + " out of 5 stars"
+        : "No ratings yet");
+    }
+  }
 
   if (!firebaseReady) {
+    updateReviewSummary(0, 0);
     noReviews.style.display = "block";
     noReviews.textContent = "Reviews will appear once the shop is fully set up.";
     return;
@@ -2563,7 +2637,11 @@ function loadPublicReviews() {
     .limit(20)
     .onSnapshot((snapshot) => {
       container.innerHTML = "";
+      let ratingTotal = 0;
+      let ratingCount = 0;
+
       if (snapshot.empty) {
+        updateReviewSummary(0, 0);
         noReviews.style.display = "block";
         return;
       }
@@ -2571,6 +2649,11 @@ function loadPublicReviews() {
 
       snapshot.forEach(doc => {
         const r = doc.data();
+        const rating = Number(r.rating);
+        if (Number.isFinite(rating) && rating >= 1 && rating <= 5) {
+          ratingTotal += rating;
+          ratingCount += 1;
+        }
         const card = document.createElement("div");
         card.className = "review-card reveal revealed";
         card.innerHTML = `
@@ -2585,9 +2668,11 @@ function loadPublicReviews() {
         container.appendChild(card);
       });
 
+      updateReviewSummary(ratingCount, ratingCount ? ratingTotal / ratingCount : 0);
       publicReviewsLoaded = true;
     }, (err) => {
       console.error("Error loading reviews:", err);
+      updateReviewSummary(0, 0);
       noReviews.style.display = "block";
       noReviews.textContent = "Could not load reviews right now.";
     });
