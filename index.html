@@ -2215,8 +2215,9 @@ mainNav.querySelectorAll("a").forEach(a => {
 /* =================================================================
    SCROLL REVEAL
    ================================================================= */
+let revealObserver = null;
 if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  let revealObserver = new IntersectionObserver((entries) => {
+  revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("revealed");
@@ -2330,6 +2331,21 @@ function showShopPage() {
   updateScrollProgress();
 }
 window.addEventListener("hashchange", showShopPage);
+window.addEventListener("popstate", showShopPage);
+
+// Route links use the app router instead of native anchor scrolling to a lower section.
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[data-page]");
+  if (!link) return;
+  const href = link.getAttribute("href");
+  if (!href || !href.startsWith("#")) return;
+
+  event.preventDefault();
+  if (window.location.hash !== href) {
+    window.history.pushState({ page: link.dataset.page }, "", href);
+  }
+  showShopPage();
+});
 showShopPage();
 
 /* =================================================================
