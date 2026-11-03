@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isShopOwner() {
+      return request.auth != null
+        && request.auth.token.phone_number == "+918619685021";
+    }
+
+    function validPublicReview() {
+      let data = request.resource.data;
+      return data.keys().hasAll(["name", "rating", "text", "visitMonth", "status", "createdAt"])
+        && data.keys().hasOnly(["name", "rating", "text", "visitMonth", "status", "createdAt", "instagramHandle"])
+        && data.name is string
+        && data.name.size() > 0
+        && data.name.size() <= 80
+        && data.rating is int
+        && data.rating >= 1
+        && data.rating <= 5
+        && data.text is string
+        && data.text.size() > 0
+        && data.text.size() <= 2000
+        && data.visitMonth is string
+        && data.visitMonth.size() <= 40
+        && data.status == "pending"
+        && data.createdAt == request.time
+        && (!("instagramHandle" in data)
+          || (data.instagramHandle is string && data.instagramHandle.size() <= 64));
+    }
+
+    function validPrivateContact(reviewId) {
+      let data = request.resource.data;
+      let reviewPath = /databases/$(database)/documents/reviews/$(reviewId);
+      return data.keys().hasAll(["contactType", "contactValue", "reviewerName", "createdAt"])
+        && data.keys().hasOnly(["contactType", "contactValue", "reviewerName", "createdAt"])
+        && data.contactType in ["instagram", "email"]
+        && data.contactValue is string
+        && data.contactValue.size() > 0
+        && data.contactValue.size() <= 320
+        && data.reviewerName is string
+        && data.reviewerName.size() <= 80
+        && data.createdAt == request.time
+        && existsAfter(reviewPath)
+        && getAfter(reviewPath).data.status == "pending";
+    }
+
+    function validOwnerReviewUpdate() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(["status", "updatedAt"])
+        && request.resource.data.status in ["approved", "hidden"]
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    match /shopSettings/{settingsId} {
+      allow get, list: if settingsId == "main";
+      allow create, update: if settingsId == "main" && isShopOwner()
+        && request.resource.data.keys().hasOnly(["announcement", "instagramLinks", "updatedAt"])
+        && request.resource.data.keys().hasAll(["announcement", "instagramLinks", "updatedAt"])
+        && request.resource.data.announcement is string
+        && request.resource.data.announcement.size() <= 200
+        && request.resource.data.instagramLinks is list
+        && request.resource.data.instagramLinks.size() <= 5
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+    }
+
+    match /reviews/{reviewId} {
+      allow get, list: if isShopOwner() || resource.data.status == "approved";
+      allow create: if validPublicReview();
+      allow update: if isShopOwner() && validOwnerReviewUpdate();
+      allow delete: if isShopOwner();
+    }
+
+    match /reviewPrivate/{reviewId} {
+      allow get: if isShopOwner();
+      allow list: if false;
+      allow create: if validPrivateContact(reviewId);
+      allow update: if false;
+      allow delete: if isShopOwner();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
