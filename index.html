@@ -1328,6 +1328,30 @@ h1, h2, h3, h4 {
   .marquee-track { animation: none; }
   .hero-image-wrap:hover img { transform: none; }
 }
+/* Private, directly addressable owner route */
+body.admin-route { min-height: 100vh; }
+body.admin-route > :not(#auth-modal):not(#owner-panel):not(script) {
+  display: none !important;
+}
+body.admin-route .modal-overlay {
+  background: var(--bg-primary);
+  padding: 20px;
+}
+body.admin-route .modal-close { display: none !important; }
+body.admin-route .owner-panel {
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  padding: clamp(20px, 4vw, 48px);
+  transform: translateX(100%);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.admin-route .owner-panel.open { transform: translateX(0); }
 </style>
 </head>
 
@@ -1367,7 +1391,6 @@ h1, h2, h3, h4 {
       <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
         <span id="theme-icon">☾</span>
       </button>
-      <button class="owner-btn" id="owner-access-btn">Owner Access</button>
     </div>
   </div>
 </header>
@@ -1554,18 +1577,12 @@ h1, h2, h3, h4 {
 <div class="modal-overlay" id="auth-modal" aria-hidden="true" role="dialog" aria-label="Owner sign-in">
   <div class="modal">
     <button class="modal-close" id="modal-close-btn" aria-label="Close">&times;</button>
-    <h3>Owner Access</h3>
+    <h3>Owner sign in</h3>
     <p class="modal-subtitle">Sign in to manage your shop.</p>
 
-    <!-- Step 1: Choose method -->
+    <!-- Step 1: Phone OTP -->
     <div class="auth-step active" id="auth-step-1">
-      <button class="btn-google" id="google-signin-btn" type="button">
-        <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 019.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 000 24c0 3.77.87 7.35 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Continue with Google
-      </button>
-
-      <div class="auth-divider"><span>or</span></div>
-
+      <p class="modal-subtitle">Sign in with the shop owner's phone number.</p>
       <div class="phone-input-group">
         <span class="phone-prefix">+91</span>
         <input type="tel" id="phone-input" placeholder="Phone number" maxlength="10" autocomplete="tel-national" inputmode="numeric" pattern="[0-9]*">
@@ -1642,34 +1659,24 @@ h1, h2, h3, h4 {
    =================================================================
 
    ┌─────────────────────────────────────────────────────────────────┐
-   │  PLACEHOLDER 1 — Firebase Web Config                          │
+   │  Firebase web app configuration                          │
    │  Find these in Firebase Console → Project Settings → Web app  │
-   │  Copy the values for YOUR "patent-fashion-chirawa" project.   │
+   │  Registered app values for the patent-fashion-chirawa project.   │
    └─────────────────────────────────────────────────────────────────┘ */
 
 const FIREBASE_CONFIG = {
-  apiKey:            "PASTE_YOUR_API_KEY_HERE",           // ← REPLACE
-  authDomain:        "patent-fashion-chirawa.firebaseapp.com",
-  projectId:         "patent-fashion-chirawa",
-  storageBucket:     "patent-fashion-chirawa.firebasestorage.app",
-  messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",        // ← REPLACE
-  appId:             "PASTE_YOUR_APP_ID_HERE"             // ← REPLACE
+  apiKey: "AIzaSyCROb4FWIuR3BmUhX-d792VUFizs_i57mY",
+  authDomain: "patent-fashion-chirawa.firebaseapp.com",
+  projectId: "patent-fashion-chirawa",
+  storageBucket: "patent-fashion-chirawa.firebasestorage.app",
+  messagingSenderId: "34405192886",
+  appId: "1:34405192886:web:d8419a6ade4e08f0b4c217",
+  measurementId: "G-ZR8ST5XY5M"
 };
 
-/* ┌─────────────────────────────────────────────────────────────────┐
-   │  PLACEHOLDER 2 — Owner Phone Number                           │
-   │  Format: +91 followed by 10 digits, e.g. "+918619685021"     │
-   └─────────────────────────────────────────────────────────────────┘ */
+// E.164 allowlist; Firestore rules enforce the same verified phone identity.
+const OWNER_PHONE = "+918619685021";
 
-const OWNER_PHONE = "+91XXXXXXXXXX";   // ← REPLACE with owner's phone (e.g. "+918619685021")
-
-/* ┌─────────────────────────────────────────────────────────────────┐
-   │  PLACEHOLDER 3 — Owner Google Email                           │
-   │  The Google account email the owner uses with "Continue       │
-   │  with Google". Must match the email in Firestore rules.       │
-   └─────────────────────────────────────────────────────────────────┘ */
-
-const OWNER_EMAIL = "OWNER_EMAIL@gmail.com";  // ← REPLACE with owner's Google email
 
 /* ================================================================= */
 
@@ -2052,6 +2059,7 @@ function showFormError(msg) {
 /* =================================================================
    AUTHENTICATION
    ================================================================= */
+const isAdminRoute = /^\/admin\/?$/.test(window.location.pathname);
 let confirmationResult = null;
 let recaptchaVerifier = null;
 let ownerUser = null;
@@ -2062,7 +2070,6 @@ const authStep1 = document.getElementById("auth-step-1");
 const authStep2 = document.getElementById("auth-step-2");
 const authError = document.getElementById("auth-error");
 const ownerPanel = document.getElementById("owner-panel");
-const ownerAccessBtn = document.getElementById("owner-access-btn");
 
 function showAuthError(msg) {
   authError.textContent = msg;
@@ -2091,39 +2098,21 @@ function showAuthStep(n) {
 }
 
 function isOwner(user) {
-  if (!user) return false;
-  return (user.phoneNumber === OWNER_PHONE) || (user.email && user.email.toLowerCase() === OWNER_EMAIL.toLowerCase());
+  return Boolean(user && user.phoneNumber === OWNER_PHONE);
 }
 
-// Owner Access button
-ownerAccessBtn.addEventListener("click", () => {
-  if (ownerUser) {
-    openOwnerPanel();
-  } else {
-    openAuthModal();
-  }
-});
+// Direct /admin route is the only entry point for owner sign-in.
+document.getElementById("modal-close-btn").hidden = isAdminRoute;
+if (isAdminRoute) {
+  document.body.classList.add("admin-route");
+  openAuthModal();
+  if (!firebaseReady) showAuthError("Owner sign-in is not configured yet.");
+}
 
 // Close modal
 document.getElementById("modal-close-btn").addEventListener("click", closeAuthModal);
 authModal.addEventListener("click", (e) => {
-  if (e.target === authModal) closeAuthModal();
-});
-
-// Google sign-in
-document.getElementById("google-signin-btn").addEventListener("click", async () => {
-  if (!firebaseReady) { showAuthError("Firebase not configured."); return; }
-  clearAuthError();
-  try {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    await auth.signInWithPopup(provider);
-    // onAuthStateChanged will handle the rest
-  } catch (err) {
-    if (err.code !== "auth/popup-closed-by-user") {
-      showAuthError(err.message || "Google sign-in failed.");
-    }
-  }
+  if (e.target === authModal && !isAdminRoute) closeAuthModal();
 });
 
 // Phone sign-in — Send OTP
@@ -2193,28 +2182,36 @@ document.getElementById("back-to-step1").addEventListener("click", () => {
   clearAuthError();
 });
 
-// Auth state listener
+// Auth state listener — editing controls are shown only on /admin after phone verification.
 if (firebaseReady) {
   auth.onAuthStateChanged((user) => {
-    if (user) {
-      if (isOwner(user)) {
-        ownerUser = user;
-        closeAuthModal();
-        ownerAccessBtn.textContent = "Owner Panel";
-        openOwnerPanel();
-        loadOwnerData();
-        startInactivityTimer();
-      } else {
-        // Not the owner — sign out immediately
-        showAuthError("This account is not authorized as the shop owner.");
-        auth.signOut();
-        ownerUser = null;
-      }
-    } else {
+    if (!isAdminRoute) {
       ownerUser = null;
-      ownerAccessBtn.textContent = "Owner Access";
       closeOwnerPanel();
       stopInactivityTimer();
+      return;
+    }
+
+    if (user && isOwner(user)) {
+      ownerUser = user;
+      closeAuthModal();
+      openOwnerPanel();
+      loadOwnerData();
+      startInactivityTimer();
+      return;
+    }
+
+    ownerUser = null;
+    closeOwnerPanel();
+    stopInactivityTimer();
+
+    if (user) {
+      auth.signOut().finally(() => {
+        openAuthModal();
+        showAuthError("This phone number is not authorized for shop administration.");
+      });
+    } else {
+      openAuthModal();
     }
   });
 }
@@ -2514,6 +2511,7 @@ function loadPublicShopSettings() {
    ================================================================= */
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
+    if (isAdminRoute) return;
     if (authModal.classList.contains("open")) closeAuthModal();
     if (ownerPanel.classList.contains("open") && !ownerUser) closeOwnerPanel();
   }
@@ -2523,8 +2521,10 @@ document.addEventListener("keydown", (e) => {
    INITIALIZE
    ================================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  loadPublicShopSettings();
-  loadPublicReviews();
+  if (!isAdminRoute) {
+    loadPublicShopSettings();
+    loadPublicReviews();
+  }
 });
 </script>
 </body>
