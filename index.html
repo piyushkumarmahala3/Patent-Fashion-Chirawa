@@ -1092,6 +1092,24 @@ h1, h2, h3, h4 {
 }
 .panel-content input:focus { border-color: var(--accent); }
 
+.panel-help {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+}
+.hero-image-preview {
+  display: block;
+  width: 100%;
+  max-height: 180px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin: 2px 0 14px;
+  background: var(--bg-accent);
+}
+.hero-image-preview[hidden] { display: none; }
+
 .panel-save-btn {
   margin-top: 16px;
   padding: 12px 20px;
@@ -1410,13 +1428,14 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
   </div>
   <div class="hero-image-wrap reveal">
     <img
+      id="hero-image"
       src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
       alt="Interior of a fashion clothing store – stock photo for illustration purposes"
       loading="eager"
       width="800"
       height="1000"
     >
-    <span class="img-credit">Illustrative image · Unsplash</span>
+    <span class="img-credit" id="hero-image-credit">Illustrative image · Unsplash</span>
   </div>
 </section>
 
@@ -1621,15 +1640,21 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
 
   <!-- Settings Tab -->
   <div class="panel-content active" id="tab-settings">
+    <h4>Opening image</h4>
+    <p class="panel-help">Paste a public HTTPS image URL. Leave it blank to use the default image.</p>
+    <input type="url" id="setting-hero-image" placeholder="https://your-image-link.jpg" autocomplete="url">
+    <img id="setting-hero-image-preview" class="hero-image-preview" alt="Opening image preview">
+
     <h4>Announcement text</h4>
     <input type="text" id="setting-announcement" maxlength="200" placeholder="PATENT FASHION CHIRAWA · FASHION · FOOTWEAR…">
 
-    <h4>Instagram post links (5)</h4>
-    <input type="url" class="ig-link-input" data-index="0" placeholder="Instagram link 1">
-    <input type="url" class="ig-link-input" data-index="1" placeholder="Instagram link 2">
-    <input type="url" class="ig-link-input" data-index="2" placeholder="Instagram link 3">
-    <input type="url" class="ig-link-input" data-index="3" placeholder="Instagram link 4">
-    <input type="url" class="ig-link-input" data-index="4" placeholder="Instagram link 5">
+    <h4>Choose Instagram posts</h4>
+    <p class="panel-help">Paste up to five post or Reel links in display order. Leave them all blank to use the latest videos automatically.</p>
+    <input type="url" class="ig-link-input" data-index="0" placeholder="Instagram post or Reel link 1">
+    <input type="url" class="ig-link-input" data-index="1" placeholder="Instagram post or Reel link 2">
+    <input type="url" class="ig-link-input" data-index="2" placeholder="Instagram post or Reel link 3">
+    <input type="url" class="ig-link-input" data-index="3" placeholder="Instagram post or Reel link 4">
+    <input type="url" class="ig-link-input" data-index="4" placeholder="Instagram post or Reel link 5">
 
     <button class="btn-primary panel-save-btn" id="save-settings-btn" type="button">Save settings</button>
     <p class="panel-status form-status" id="settings-status"></p>
@@ -1687,6 +1712,8 @@ const DEFAULT_IG_LINKS = [
   "https://www.instagram.com/reel/De_FAIgxZir/",
   "https://www.instagram.com/reel/De8o3QYRzbM/"
 ];
+
+const DEFAULT_HERO_IMAGE = "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80";
 
 const INACTIVITY_MS = 15 * 60 * 1000; // 15 minutes
 
@@ -1853,6 +1880,7 @@ reviewText.addEventListener("input", () => {
    INSTAGRAM SECTION
    ================================================================= */
 let currentIgLinks = [...DEFAULT_IG_LINKS];
+let hasManualInstagramSelection = false;
 
 function renderInstagramCards(links) {
   const container = document.getElementById("ig-container");
@@ -1895,6 +1923,74 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
+function isSafeInstagramMediaUrl(value) {
+  if (typeof value !== "string") return false;
+  try {
+    const url = new URL(value.trim());
+    const parts = url.pathname.split("/").filter(Boolean);
+    return url.protocol === "https:" &&
+      (url.hostname === "www.instagram.com" || url.hostname === "instagram.com") &&
+      parts.length === 2 &&
+      ["reel", "p", "tv"].includes(parts[0]) &&
+      /^[A-Za-z0-9_-]+$/.test(parts[1]);
+  } catch (_) {
+    return false;
+  }
+}
+
+function isSafeHeroImageUrl(value) {
+  if (typeof value !== "string") return false;
+  try {
+    const url = new URL(value.trim());
+    return url.protocol === "https:" && Boolean(url.hostname) && !url.username && !url.password;
+  } catch (_) {
+    return false;
+  }
+}
+
+function updateHeroImagePreview(value) {
+  const preview = document.getElementById("setting-hero-image-preview");
+  if (!preview) return;
+  const url = value && value.trim() ? value.trim() : DEFAULT_HERO_IMAGE;
+  if (!isSafeHeroImageUrl(url)) {
+    preview.hidden = true;
+    preview.removeAttribute("src");
+    return;
+  }
+  preview.onerror = () => {
+    preview.hidden = true;
+    preview.removeAttribute("src");
+  };
+  preview.onload = () => { preview.hidden = false; };
+  preview.src = url;
+  preview.hidden = false;
+}
+
+function applyHeroImage(value) {
+  const image = document.getElementById("hero-image");
+  const credit = document.getElementById("hero-image-credit");
+  if (!image) return;
+
+  const url = value && value.trim() ? value.trim() : "";
+  if (!url || !isSafeHeroImageUrl(url)) {
+    image.onerror = null;
+    image.src = DEFAULT_HERO_IMAGE;
+    image.alt = "Interior of a fashion clothing store – stock photo for illustration purposes";
+    if (credit) credit.textContent = "Illustrative image · Unsplash";
+    return;
+  }
+
+  image.onerror = () => {
+    image.onerror = null;
+    image.src = DEFAULT_HERO_IMAGE;
+    image.alt = "Interior of a fashion clothing store – stock photo for illustration purposes";
+    if (credit) credit.textContent = "Illustrative image · Unsplash";
+  };
+  image.src = url;
+  image.alt = "Fashion styles at Patent Fashion Chirawa";
+  if (credit) credit.textContent = "Shop image";
+}
+
 // Load Instagram embeds and re-process cards after the latest-feed response arrives.
 function loadInstagramEmbed() {
   const processEmbeds = () => {
@@ -1917,6 +2013,7 @@ function loadInstagramEmbed() {
 }
 
 async function refreshInstagramFeedFromApi() {
+  if (hasManualInstagramSelection) return;
   try {
     const response = await fetch("/api/instagram-feed", {
       headers: { Accept: "application/json" },
@@ -1924,6 +2021,7 @@ async function refreshInstagramFeedFromApi() {
     });
     if (!response.ok) return;
     const data = await response.json();
+    if (hasManualInstagramSelection) return;
     const videoLinks = (Array.isArray(data.videos) ? data.videos : [])
       .map(video => video && video.permalink)
       .filter(link => {
@@ -2318,23 +2416,40 @@ function loadOwnerData() {
 function loadShopSettings() {
   if (!firebaseReady) return;
 
+  const heroInput = document.getElementById("setting-hero-image");
+  const instagramInputs = document.querySelectorAll(".ig-link-input");
+  if (heroInput) {
+    heroInput.value = "";
+    updateHeroImagePreview("");
+  }
+  instagramInputs.forEach(input => { input.value = ""; });
+
   db.collection("shopSettings").doc("main").get()
     .then(doc => {
+      let savedLinks = [];
       if (doc.exists) {
         const data = doc.data();
-        if (data.announcement) {
+        if (typeof data.announcement === "string") {
           document.getElementById("setting-announcement").value = data.announcement;
           updateMarqueeText(data.announcement);
         }
-        if (data.instagramLinks && Array.isArray(data.instagramLinks)) {
-          const inputs = document.querySelectorAll(".ig-link-input");
-          data.instagramLinks.forEach((link, i) => {
-            if (inputs[i]) inputs[i].value = link || "";
-          });
-          currentIgLinks = data.instagramLinks;
+        if (typeof data.heroImage === "string") {
+          if (heroInput) heroInput.value = data.heroImage;
+          updateHeroImagePreview(data.heroImage);
+        }
+        if (Array.isArray(data.instagramLinks)) {
+          savedLinks = data.instagramLinks
+            .filter(link => typeof link === "string" && link.trim())
+            .filter(isSafeInstagramMediaUrl)
+            .slice(0, 5);
         }
       }
-      // Render IG cards with whatever links we have
+
+      instagramInputs.forEach((input, index) => {
+        input.value = savedLinks[index] || "";
+      });
+      hasManualInstagramSelection = savedLinks.length > 0;
+      currentIgLinks = hasManualInstagramSelection ? savedLinks : [...DEFAULT_IG_LINKS];
       renderInstagramCards(currentIgLinks);
       loadInstagramEmbed();
     })
@@ -2345,6 +2460,9 @@ function loadShopSettings() {
     });
 }
 
+const heroImageInput = document.getElementById("setting-hero-image");
+heroImageInput.addEventListener("input", () => updateHeroImagePreview(heroImageInput.value));
+
 document.getElementById("save-settings-btn").addEventListener("click", async () => {
   if (!firebaseReady || !ownerUser) return;
 
@@ -2353,27 +2471,43 @@ document.getElementById("save-settings-btn").addEventListener("click", async () 
   statusEl.className = "panel-status form-status";
 
   const announcement = document.getElementById("setting-announcement").value.trim();
-  const igLinks = [];
+  const heroImage = heroImageInput.value.trim();
+  const instagramLinks = [];
   document.querySelectorAll(".ig-link-input").forEach(input => {
-    igLinks.push(input.value.trim());
+    if (input.value.trim()) instagramLinks.push(input.value.trim());
   });
+
+  if (heroImage && !isSafeHeroImageUrl(heroImage)) {
+    statusEl.textContent = "Use a valid HTTPS image URL.";
+    statusEl.className = "panel-status form-status error";
+    return;
+  }
+  if (instagramLinks.some(link => !isSafeInstagramMediaUrl(link))) {
+    statusEl.textContent = "Use Instagram post or Reel links only.";
+    statusEl.className = "panel-status form-status error";
+    return;
+  }
 
   try {
     await db.collection("shopSettings").doc("main").set({
       announcement: announcement,
-      instagramLinks: igLinks,
+      instagramLinks: instagramLinks,
+      heroImage: heroImage,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
 
     if (announcement) updateMarqueeText(announcement);
-    currentIgLinks = igLinks;
+    applyHeroImage(heroImage);
+    hasManualInstagramSelection = instagramLinks.length > 0;
+    currentIgLinks = hasManualInstagramSelection ? instagramLinks : [...DEFAULT_IG_LINKS];
     renderInstagramCards(currentIgLinks);
     loadInstagramEmbed();
+    if (!hasManualInstagramSelection) refreshInstagramFeedFromApi();
 
     statusEl.textContent = "Saved!";
     statusEl.className = "panel-status form-status success";
   } catch (err) {
-    console.error("Save settings error:", err);
+    console.error("Error saving settings:", err);
     statusEl.textContent = "Error saving settings.";
     statusEl.className = "panel-status form-status error";
   }
@@ -2517,6 +2651,7 @@ window.deleteReview = async function(reviewId) {
    ================================================================= */
 function loadPublicShopSettings() {
   if (!firebaseReady) {
+    hasManualInstagramSelection = false;
     renderInstagramCards(currentIgLinks);
     loadInstagramEmbed();
     refreshInstagramFeedFromApi();
@@ -2525,20 +2660,30 @@ function loadPublicShopSettings() {
 
   db.collection("shopSettings").doc("main").get()
     .then(doc => {
+      let savedLinks = [];
       if (doc.exists) {
         const data = doc.data();
-        if (data.announcement) updateMarqueeText(data.announcement);
-        if (data.instagramLinks && Array.isArray(data.instagramLinks)) {
-          currentIgLinks = data.instagramLinks.filter(l => l);
-          if (currentIgLinks.length === 0) currentIgLinks = [...DEFAULT_IG_LINKS];
+        if (typeof data.announcement === "string" && data.announcement) {
+          updateMarqueeText(data.announcement);
+        }
+        if (typeof data.heroImage === "string") applyHeroImage(data.heroImage);
+        if (Array.isArray(data.instagramLinks)) {
+          savedLinks = data.instagramLinks
+            .filter(link => typeof link === "string" && link.trim())
+            .filter(isSafeInstagramMediaUrl)
+            .slice(0, 5);
         }
       }
+
+      hasManualInstagramSelection = savedLinks.length > 0;
+      currentIgLinks = hasManualInstagramSelection ? savedLinks : [...DEFAULT_IG_LINKS];
       renderInstagramCards(currentIgLinks);
       loadInstagramEmbed();
-      refreshInstagramFeedFromApi();
+      if (!hasManualInstagramSelection) refreshInstagramFeedFromApi();
     })
     .catch(err => {
       console.error("Error loading public settings:", err);
+      hasManualInstagramSelection = false;
       renderInstagramCards(currentIgLinks);
       loadInstagramEmbed();
       refreshInstagramFeedFromApi();
