@@ -1428,6 +1428,15 @@ h1, h2, h3, h4 {
   line-height: 0.98;
   margin-bottom: 24px;
 }
+
+.page-intro[data-page-view="reviews"] h1 {
+  max-width: none;
+  width: 100%;
+  white-space: nowrap;
+  font-size: clamp(1.5rem, 6.5vw, 5.5rem);
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
 .page-intro > p:not(.page-kicker) {
   max-width: 620px;
   color: var(--text-secondary);
@@ -1751,35 +1760,7 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
   <p>"A little style, a lot of you"</p>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     5. INFO STRIP
-     ═══════════════════════════════════════════════ -->
-<section class="info-strip" data-page-view="home">
-  <div class="info-grid">
-    <div class="info-item">
-      <span class="info-icon" aria-hidden="true">📍</span>
-      <span class="info-label">Location</span>
-      <a href="https://www.google.com/maps?q=28.240919,75.652730" target="_blank" rel="noopener">
-        Chirawa, Rajasthan 333026
-      </a>
-    </div>
-    <div class="info-item">
-      <span class="info-icon" aria-hidden="true">📞</span>
-      <span class="info-label">Phone</span>
-      <a href="tel:+918619685021">86196 85021</a>
-    </div>
-    <div class="info-item">
-      <span class="info-icon" aria-hidden="true">💬</span>
-      <span class="info-label">Contact</span>
-      <span>Call or DM to check price, size &amp; availability.</span>
-    </div>
-    <div class="info-item">
-      <span class="info-icon" aria-hidden="true">📸</span>
-      <span class="info-label">Instagram</span>
-      <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener">@patentparis.com_</a>
-    </div>
-  </div>
-</section>
+
 
 <section class="page-hub" data-page-view="home" aria-label="Explore the shop">
   <div class="container">
@@ -1827,7 +1808,7 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
 
 <section class="page-intro reveal" data-page-view="reviews" hidden>
   <p class="page-kicker">From the neighbourhood</p>
-  <h1>Customer reviews</h1>
+  <h1 id="reviews-page-title">Customer reviews</h1>
   <p>Read reviews from shoppers and share your own experience with Patent Fashion Chirawa.</p>
   <a class="page-intro-link" href="#review-form">Write a review <span aria-hidden="true">↓</span></a>
 </section>
@@ -1835,8 +1816,7 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
 <!-- ═══════════════════════════════════════════════
      7. REVIEWS SECTION
      ═══════════════════════════════════════════════ -->
-<section id="reviews" class="reviews-section" data-page-view="reviews" hidden>
-  <h2 class="section-title reveal">Customer reviews</h2>
+<section id="reviews" class="reviews-section" data-page-view="reviews" hidden aria-labelledby="reviews-page-title">
   <div id="reviews-container" class="reviews-grid"></div>
   <p id="no-reviews" class="no-reviews" style="display:none;">No reviews yet. Be the first to share your experience!</p>
 </section>
@@ -1923,6 +1903,37 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
     <div class="visit-links">
       <a href="tel:+918619685021" class="visit-link">📞 86196 85021</a>
       <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener" class="visit-link">📸 @patentparis.com_</a>
+    </div>
+  </div>
+</section>
+
+<!-- Shop contact details at the end of the homepage -->
+<!-- ═══════════════════════════════════════════════
+     SHOP CONTACT DETAILS
+     ═══════════════════════════════════════════════ -->
+<section class="info-strip" data-page-view="home">
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">📍</span>
+      <span class="info-label">Location</span>
+      <a href="https://www.google.com/maps?q=28.240919,75.652730" target="_blank" rel="noopener">
+        Chirawa, Rajasthan 333026
+      </a>
+    </div>
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">📞</span>
+      <span class="info-label">Phone</span>
+      <a href="tel:+918619685021">86196 85021</a>
+    </div>
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">💬</span>
+      <span class="info-label">Contact</span>
+      <span>Call or DM to check price, size &amp; availability.</span>
+    </div>
+    <div class="info-item">
+      <span class="info-icon" aria-hidden="true">📸</span>
+      <span class="info-label">Instagram</span>
+      <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener">@patentparis.com_</a>
     </div>
   </div>
 </section>
