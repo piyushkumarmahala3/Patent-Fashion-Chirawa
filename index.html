@@ -993,6 +993,34 @@ h1, h2, h3, h4 {
 }
 .visit-address a:hover { opacity: 1; text-decoration-color: var(--gold); }
 
+.visit-hours {
+  max-width: 620px;
+  margin: 0 auto 28px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.045);
+}
+.visit-hours-title {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.visit-hours-list {
+  display: flex;
+  justify-content: center;
+  gap: 24px 36px;
+  flex-wrap: wrap;
+}
+.visit-hours-list div { display: grid; gap: 4px; }
+.visit-hours-list dt { color: var(--text-muted-dark); font-size: 12px; }
+.visit-hours-list dd { color: var(--text-on-dark); font-size: 15px; font-weight: 600; margin: 0; }
+.visit-hours-note { color: var(--text-muted-dark); font-size: 12px; margin-top: 14px; }
+
 .visit-links {
   display: flex;
   gap: 24px;
@@ -1747,6 +1775,7 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
   .reviews-grid { grid-template-columns: 1fr; }
 
   .visit-links { flex-direction: column; align-items: center; }
+  .visit-hours-list { flex-direction: column; gap: 14px; }
 }
 
 @media (max-width: 480px) {
@@ -2047,6 +2076,14 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
         Near Kabutar Khana, Khetri Road, near Gitanjali Jewellers,<br>Chirawa, Rajasthan 333026
       </a>
     </p>
+    <div class="visit-hours" aria-label="Store opening hours">
+      <span class="visit-hours-title">Store hours</span>
+      <dl class="visit-hours-list">
+        <div><dt>Monday</dt><dd>9:00 am – 7:00 pm</dd></div>
+        <div><dt>Tuesday – Sunday</dt><dd>9:00 am – 5:00 pm</dd></div>
+      </dl>
+      <p class="visit-hours-note">Holiday hours may vary. Call before visiting to confirm.</p>
+    </div>
     <div class="visit-links">
       <a href="tel:+918619685021" class="visit-link">📞 86196 85021</a>
       <a href="https://www.instagram.com/patentparis.com_/" target="_blank" rel="noopener" class="visit-link">📸 @patentparis.com_</a>
