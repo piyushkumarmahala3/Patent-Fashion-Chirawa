@@ -80,6 +80,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  z-index: 9999;
+  pointer-events: none;
+}
 
 body {
   font-family: var(--font-sans);
@@ -337,6 +349,11 @@ h1, h2, h3, h4 {
 }
 
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-btns .btn-primary,
+.hero-btns .btn-secondary {
+  translate: var(--magnetic-x, 0px) var(--magnetic-y, 0px);
+  transition: translate 0.24s cubic-bezier(0.2, 0.7, 0.2, 1), background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+}
 
 .btn-primary {
   position: relative;
@@ -402,7 +419,8 @@ h1, h2, h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  translate: var(--hero-shift-x, 0px) var(--hero-shift-y, 0px);
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), translate 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .hero-image-wrap:hover img { transform: scale(1.04); }
 
@@ -1257,6 +1275,9 @@ h1, h2, h3, h4 {
 .hero-content.revealed > :nth-child(2) { animation-delay: 90ms; }
 .hero-content.revealed > :nth-child(3) { animation-delay: 170ms; }
 .hero-content.revealed > :nth-child(4) { animation-delay: 250ms; }
+.hero-content.revealed h1 {
+  animation: hero-title-wipe 0.95s cubic-bezier(0.2, 0.7, 0.2, 1) 90ms both;
+}
 .hero-image-wrap.revealed img {
   animation: hero-image-settle 1.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -1273,9 +1294,13 @@ h1, h2, h3, h4 {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes hero-title-wipe {
+  from { opacity: 0; transform: translateY(24px); clip-path: inset(0 0 95% 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0); }
+}
 @keyframes hero-image-settle {
-  from { transform: scale(1.07); }
-  to { transform: scale(1); }
+  from { transform: scale(1.07); clip-path: inset(0 0 100% 0); }
+  to { transform: scale(1); clip-path: inset(0); }
 }
 @keyframes card-arrive {
   from { opacity: 0; transform: translateY(18px) scale(0.985); }
@@ -1526,7 +1551,7 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
     <div class="info-item">
       <span class="info-icon" aria-hidden="true">💬</span>
       <span class="info-label">Contact</span>
-      <span>Call or DM to confirm prices and product details.</span>
+      <span>Call or DM to check price, size &amp; availability.</span>
     </div>
     <div class="info-item">
       <span class="info-icon" aria-hidden="true">📸</span>
@@ -1859,6 +1884,60 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 } else {
   document.querySelectorAll(".reveal").forEach(el => el.classList.add("revealed"));
+}
+
+/* =================================================================
+   SCROLL PROGRESS & POINTER MOTION
+   ================================================================= */
+const updateScrollProgress = () => {
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+  root.style.setProperty("--scroll-progress", progress.toFixed(4));
+};
+let scrollProgressQueued = false;
+window.addEventListener("scroll", () => {
+  if (scrollProgressQueued) return;
+  scrollProgressQueued = true;
+  requestAnimationFrame(() => {
+    updateScrollProgress();
+    scrollProgressQueued = false;
+  });
+}, { passive: true });
+window.addEventListener("resize", updateScrollProgress, { passive: true });
+updateScrollProgress();
+
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (finePointer && !reducedMotion) {
+  const heroFrame = document.querySelector(".hero-image-wrap");
+  const heroImage = document.getElementById("hero-image");
+  if (heroFrame && heroImage) {
+    heroFrame.addEventListener("pointermove", event => {
+      const rect = heroFrame.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      heroImage.style.setProperty("--hero-shift-x", (x * 8).toFixed(1) + "px");
+      heroImage.style.setProperty("--hero-shift-y", (y * 8).toFixed(1) + "px");
+    });
+    heroFrame.addEventListener("pointerleave", () => {
+      heroImage.style.removeProperty("--hero-shift-x");
+      heroImage.style.removeProperty("--hero-shift-y");
+    });
+  }
+
+  document.querySelectorAll(".hero-btns .btn-primary, .hero-btns .btn-secondary").forEach(button => {
+    button.addEventListener("pointermove", event => {
+      const rect = button.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      button.style.setProperty("--magnetic-x", (x * 5).toFixed(1) + "px");
+      button.style.setProperty("--magnetic-y", (y * 5).toFixed(1) + "px");
+    });
+    button.addEventListener("pointerleave", () => {
+      button.style.removeProperty("--magnetic-x");
+      button.style.removeProperty("--magnetic-y");
+    });
+  });
 }
 
 /* =================================================================
