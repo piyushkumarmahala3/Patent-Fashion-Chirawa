@@ -1626,6 +1626,16 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
 
   .shop-name { display: none; }
 
+  .hero-image-wrap {
+    width: 100vw;
+    height: min(125vw, 72vh);
+    height: min(125vw, 72svh);
+    max-height: none;
+    aspect-ratio: auto;
+    margin-left: calc(50% - 50vw);
+    border-radius: 0;
+  }
+
   .header-inner {
     padding-inline: 16px;
     gap: 8px;
@@ -1686,7 +1696,7 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
   .hero-btns { flex-direction: column; width: 100%; }
   .hero-btns .btn-primary,
   .hero-btns .btn-secondary { width: 100%; justify-content: center; }
-  .hero-image-wrap { max-height: 360px; }
+  .hero-image-wrap { max-height: none; }
 
   .info-grid { grid-template-columns: 1fr; gap: 20px; }
 
