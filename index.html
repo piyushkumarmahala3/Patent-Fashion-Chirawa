@@ -339,6 +339,9 @@ h1, h2, h3, h4 {
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
 
 .btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -354,8 +357,21 @@ h1, h2, h3, h4 {
   transition: all var(--transition);
   cursor: pointer;
 }
-.btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: -55%;
+  left: -70%;
+  width: 42%;
+  height: 210%;
+  transform: rotate(24deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+  pointer-events: none;
+  transition: left 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+.btn-primary:hover::after { left: 135%; }
+.btn-primary:active { transform: translateY(0) scale(0.985); }
 
 .btn-secondary {
   display: inline-flex;
@@ -446,7 +462,14 @@ h1, h2, h3, h4 {
   gap: 6px;
   text-align: center;
 }
-.info-icon { font-size: 22px; }
+.info-icon {
+  font-size: 22px;
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .info-item:hover .info-icon { transform: translateY(-4px) scale(1.12); }
+}
 .info-label {
   font-size: 11px;
   font-weight: 600;
@@ -495,13 +518,14 @@ h1, h2, h3, h4 {
   overflow: hidden;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  transition: box-shadow var(--transition), border-color var(--transition);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow var(--transition), border-color var(--transition);
   display: flex;
   flex-direction: column;
 }
 .ig-card:hover {
   box-shadow: var(--card-shadow-hover);
   border-color: var(--accent);
+  transform: translateY(-7px) scale(1.01);
 }
 
 .ig-card .instagram-media {
@@ -577,11 +601,11 @@ h1, h2, h3, h4 {
   padding: 28px;
   box-shadow: var(--card-shadow);
   border: 1px solid var(--border);
-  transition: all var(--transition);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow var(--transition), border-color var(--transition);
 }
 .review-card:hover {
   box-shadow: var(--card-shadow-hover);
-  transform: translateY(-2px);
+  transform: translateY(-5px);
 }
 
 .review-stars { color: var(--star-active); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
@@ -1210,16 +1234,52 @@ h1, h2, h3, h4 {
 }
 
 /* ═══════════════════════════════════════════════
-   SCROLL REVEAL
+   PREMIUM MOTION
    ═══════════════════════════════════════════════ */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translate3d(0, 26px, 0);
+  filter: blur(4px);
+  transition:
+    opacity 0.75s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.75s ease;
 }
 .reveal.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+.hero-content.revealed > * {
+  animation: hero-copy-in 0.72s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero-content.revealed > :nth-child(2) { animation-delay: 90ms; }
+.hero-content.revealed > :nth-child(3) { animation-delay: 170ms; }
+.hero-content.revealed > :nth-child(4) { animation-delay: 250ms; }
+.hero-image-wrap.revealed img {
+  animation: hero-image-settle 1.25s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.ig-card, .review-card {
+  animation: card-arrive 0.72s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.ig-card:nth-child(2), .review-card:nth-child(2) { animation-delay: 80ms; }
+.ig-card:nth-child(3), .review-card:nth-child(3) { animation-delay: 150ms; }
+.ig-card:nth-child(4), .review-card:nth-child(4) { animation-delay: 220ms; }
+.ig-card:nth-child(5), .review-card:nth-child(5) { animation-delay: 290ms; }
+
+@keyframes hero-copy-in {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-image-settle {
+  from { transform: scale(1.07); }
+  to { transform: scale(1); }
+}
+@keyframes card-arrive {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* ═══════════════════════════════════════════════
