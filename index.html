@@ -2634,11 +2634,11 @@ function loadPublicReviews() {
   db.collection("reviews")
     .where("status", "==", "approved")
     .orderBy("createdAt", "desc")
-    .limit(20)
     .onSnapshot((snapshot) => {
       container.innerHTML = "";
       let ratingTotal = 0;
       let ratingCount = 0;
+      let renderedCount = 0;
 
       if (snapshot.empty) {
         updateReviewSummary(0, 0);
@@ -2654,6 +2654,8 @@ function loadPublicReviews() {
           ratingTotal += rating;
           ratingCount += 1;
         }
+        if (renderedCount >= 20) return;
+        renderedCount += 1;
         const card = document.createElement("div");
         card.className = "review-card reveal revealed";
         card.innerHTML = `
