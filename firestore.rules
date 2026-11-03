@@ -52,12 +52,17 @@ service cloud.firestore {
     match /shopSettings/{settingsId} {
       allow get, list: if settingsId == "main";
       allow create, update: if settingsId == "main" && isShopOwner()
-        && request.resource.data.keys().hasOnly(["announcement", "instagramLinks", "updatedAt"])
+        && request.resource.data.keys().hasOnly(["announcement", "instagramLinks", "heroImage", "updatedAt"])
         && request.resource.data.keys().hasAll(["announcement", "instagramLinks", "updatedAt"])
         && request.resource.data.announcement is string
         && request.resource.data.announcement.size() <= 200
         && request.resource.data.instagramLinks is list
         && request.resource.data.instagramLinks.size() <= 5
+        && (!("heroImage" in request.resource.data)
+          || (request.resource.data.heroImage is string
+            && request.resource.data.heroImage.size() <= 2048
+            && (request.resource.data.heroImage == ""
+              || request.resource.data.heroImage.matches("^https://.+"))))
         && request.resource.data.updatedAt == request.time;
       allow delete: if false;
     }
