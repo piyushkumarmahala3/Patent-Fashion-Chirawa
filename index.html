@@ -477,15 +477,24 @@ h1, h2, h3, h4 {
   overflow: hidden;
   aspect-ratio: 4 / 5;
   max-height: 620px;
+  background: var(--bg-primary);
 }
-.hero-image-wrap img {
+.hero-image-wrap video,
+.hero-image-wrap img:not([hidden]) {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   translate: var(--hero-shift-x, 0px) var(--hero-shift-y, 0px);
   transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), translate 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.hero-image-wrap:hover img { transform: scale(1.04); }
+.hero-image-wrap video { display: block; }
+.hero-image-wrap video[hidden],
+.hero-image-wrap img[hidden],
+.hero-image-wrap .img-credit[hidden] { display: none !important; }
+.hero-image-wrap:hover video,
+.hero-image-wrap:hover img:not([hidden]) { transform: scale(1.04); }
 
 .img-credit {
   position: absolute;
@@ -1652,7 +1661,8 @@ h1, h2, h3, h4 {
 .hero-content.revealed h1 {
   animation: hero-title-wipe 0.95s cubic-bezier(0.2, 0.7, 0.2, 1) 90ms both;
 }
-.hero-image-wrap.revealed img {
+.hero-image-wrap.revealed video,
+.hero-image-wrap.revealed img:not([hidden]) {
   animation: hero-image-settle 1.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -1987,7 +1997,8 @@ body.route-enter .page-intro:not([hidden]) > p:not(.page-kicker) { animation: ro
   }
   .reveal { opacity: 1; transform: none; }
   .marquee-track { animation: none; }
-  .hero-image-wrap:hover img { transform: none; }
+  .hero-image-wrap:hover video,
+  .hero-image-wrap:hover img:not([hidden]) { transform: none; }
 }
 /* Private, directly addressable owner route */
 body.admin-route { min-height: 100vh; }
@@ -2079,15 +2090,28 @@ body.admin-route .owner-panel.open { transform: translateX(0); }
     </div>
   </div>
   <div class="hero-image-wrap reveal">
+    <video
+      id="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="assets/hero-fashion-poster.jpg"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <source src="assets/hero-fashion-loop.mp4" type="video/mp4">
+    </video>
     <img
       id="hero-image"
-      src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
-      alt="Interior of a fashion clothing store – stock photo for illustration purposes"
+      alt="Fashion styles at Patent Fashion Chirawa"
       loading="eager"
       width="800"
       height="1000"
+      hidden
     >
-    <span class="img-credit" id="hero-image-credit">Illustrative image · Unsplash</span>
+    <span class="img-credit" id="hero-image-credit" hidden>Shop image</span>
   </div>
 </section>
 
@@ -2591,18 +2615,25 @@ const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matc
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (finePointer && !reducedMotion) {
   const heroFrame = document.querySelector(".hero-image-wrap");
-  const heroImage = document.getElementById("hero-image");
-  if (heroFrame && heroImage) {
+  const heroMedia = [
+    document.getElementById("hero-video"),
+    document.getElementById("hero-image")
+  ].filter(Boolean);
+  if (heroFrame && heroMedia.length) {
     heroFrame.addEventListener("pointermove", event => {
       const rect = heroFrame.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
-      heroImage.style.setProperty("--hero-shift-x", (x * 8).toFixed(1) + "px");
-      heroImage.style.setProperty("--hero-shift-y", (y * 8).toFixed(1) + "px");
+      heroMedia.forEach(media => {
+        media.style.setProperty("--hero-shift-x", (x * 8).toFixed(1) + "px");
+        media.style.setProperty("--hero-shift-y", (y * 8).toFixed(1) + "px");
+      });
     });
     heroFrame.addEventListener("pointerleave", () => {
-      heroImage.style.removeProperty("--hero-shift-x");
-      heroImage.style.removeProperty("--hero-shift-y");
+      heroMedia.forEach(media => {
+        media.style.removeProperty("--hero-shift-x");
+        media.style.removeProperty("--hero-shift-y");
+      });
     });
   }
 
@@ -2873,27 +2904,33 @@ function updateHeroImagePreview(value) {
 
 function applyHeroImage(value) {
   const image = document.getElementById("hero-image");
+  const video = document.getElementById("hero-video");
   const credit = document.getElementById("hero-image-credit");
-  if (!image) return;
+  if (!image || !video) return;
 
   const url = value && value.trim() ? value.trim() : "";
-  if (!url || !isSafeHeroImageUrl(url)) {
+  const showVideo = () => {
     image.onerror = null;
-    image.src = DEFAULT_HERO_IMAGE;
-    image.alt = "Interior of a fashion clothing store – stock photo for illustration purposes";
-    if (credit) credit.textContent = "Illustrative image · Unsplash";
+    image.hidden = true;
+    image.removeAttribute("src");
+    video.hidden = false;
+    if (credit) credit.hidden = true;
+  };
+
+  if (!url || !isSafeHeroImageUrl(url)) {
+    showVideo();
     return;
   }
 
-  image.onerror = () => {
-    image.onerror = null;
-    image.src = DEFAULT_HERO_IMAGE;
-    image.alt = "Interior of a fashion clothing store – stock photo for illustration purposes";
-    if (credit) credit.textContent = "Illustrative image · Unsplash";
-  };
+  image.onerror = showVideo;
   image.src = url;
   image.alt = "Fashion styles at Patent Fashion Chirawa";
-  if (credit) credit.textContent = "Shop image";
+  image.hidden = false;
+  video.hidden = true;
+  if (credit) {
+    credit.textContent = "Shop image";
+    credit.hidden = false;
+  }
 }
 
 // Load Instagram embeds and re-process cards after the latest-feed response arrives.
